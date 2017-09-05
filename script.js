@@ -1,5 +1,5 @@
 //create firebase reference
-var dbRef = new Firebase("https://dualchess.firebaseio.com/");
+var dbRef = new Firebase("https://testfirebase-5f6ee.firebaseio.com/");
 var contactsRef = dbRef.child('contacts')
 
 //load older contacts as well as any newly added one...
