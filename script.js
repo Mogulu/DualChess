@@ -3,33 +3,40 @@ var dbRef = new Firebase("https://dualchess.firebaseio.com/");
 var contactsRef = dbRef.child('contacts')
 
 //load older contacts as well as any newly added one...
-contactsRef.on("child_added", function(snap) {
+contactsRef.on("child_added", function(snap) 
+{
   console.log("added", snap.key(), snap.val());
   document.querySelector('#contacts').innerHTML += (contactHtmlFromObject(snap.val()));
 });
 
 //save contact
-document.querySelector('.addValue').addEventListener("click", function( event ) {  
+document.querySelector('#addValue').addEventListener("click", function( event ) 
+{  
   event.preventDefault();
-  if( document.querySelector('#name').value != '' || document.querySelector('#email').value != '' ){
+  if( document.querySelector('#name').value != '' || document.querySelector('#email').value != '' )
+  {
     contactsRef
-      .push({
+      .push(
+        {
         name: document.querySelector('#name').value,
         email: document.querySelector('#email').value,
-        location: {
+        location: 
+        {
           city: document.querySelector('#city').value,
           state: document.querySelector('#state').value,
           zip: document.querySelector('#zip').value
         }
       })
       contactForm.reset();
-  } else {
+  } else 
+  {
     alert('Please fill atlease name or email!');
   }
 }, false);
 
-//prepare conatct object's HTML
-function contactHtmlFromObject(contact){
+//prepare contact object's HTML
+function contactHtmlFromObject(contact)
+{
   console.log( contact );
   var html = '';
   html += '<li class="list-group-item contact">';
