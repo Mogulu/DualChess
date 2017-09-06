@@ -33,6 +33,7 @@ function FriendlyChat() {
   this.signOutButton = document.getElementById('sign-out');
   this.signInSnackbar = document.getElementById('must-signin-snackbar');
   this.messages = document.getElementById('messages-card-container');
+  this.chessboard = document.getElementById('chessboard');
 
   // Saves message on form submit.
   this.messageForm.addEventListener('submit', this.saveMessage.bind(this));
@@ -165,6 +166,8 @@ FriendlyChat.prototype.onAuthStateChanged = function(user) {
     this.userPic.removeAttribute('hidden');
     this.signOutButton.removeAttribute('hidden');
     this.messages.removeAttribute('hidden');
+    this.chessboard.removeAttribute('hidden');
+
 
     // Hide sign-in button.
     this.signInButton.setAttribute('hidden', 'true');
@@ -180,6 +183,7 @@ FriendlyChat.prototype.onAuthStateChanged = function(user) {
     this.userPic.setAttribute('hidden', 'true');
     this.signOutButton.setAttribute('hidden', 'true');
     this.messages.setAttribute('hidden','true');
+    this.chessboard.setAttribute('hidden','true');
 
     // Show sign-in button.
     this.signInButton.removeAttribute('hidden');
