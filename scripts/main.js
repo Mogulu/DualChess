@@ -53,6 +53,8 @@ function FriendlyChat() {
   this.mediaCapture.addEventListener('change', this.saveImageMessage.bind(this));
 
   this.initFirebase();
+
+  this.loadChessboard();
 }
 
 // Sets up shortcuts to Firebase features and initiate firebase auth.
@@ -289,4 +291,35 @@ FriendlyChat.prototype.checkSetup = function() {
 
 window.onload = function() {
   window.friendlyChat = new FriendlyChat();
+};
+
+
+// Load the chessboard initial
+FriendlyChat.prototype.loadChessboard = function() {
+
+  var ref = firebase.database().ref();
+  var pieces;
+  
+  ref.on("value", function(snapshot) {
+    var list = snapshot.val()['games'];
+    for (var key in list) 
+    {
+      if (list.hasOwnProperty(key)) 
+      {
+        pieces = list[key].pieces ? list[key].pieces : '';
+      }
+    }
+
+    for( var piece in pieces )
+    {
+      console.log(piece);
+      console.log(pieces[piece]);
+  
+      $('<img src="../images/pieces/'+piece+'.png" id="'+ pieces[piece].key +'" style="margin-top:-29%; height: 100%; width: 100%; ">').appendTo('#'+pieces[piece]);
+    }
+  }, function (error) {
+     console.log("Error: " + error.code);
+  });
+  
+  
 };
