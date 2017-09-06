@@ -75,7 +75,8 @@
   
     // Create the chess board
     for ( var i=1; i<=64; i++ ) {
-      $('<div style="position: absolute; height: auto; width: 8%; margin-left:'+ (4,5*((i-1)%8)) +'%;margin-top:'+ (4,5 * Math.floor( (i-1)/8) ) +'%;">' + i + '</div>').appendTo( '#chessboard' ).droppable( {
+      
+      $('<div style="position: absolute; height: auto; width: 8%; margin-left:'+ (4.2*((i-1)%8)) +'%;margin-top:'+ (4.2 * Math.floor( (i-1)/8) ) +'%;">' + i + '</div>').appendTo( '#chessboard' ).droppable( {
         // accept: '#cardPile div',
         hoverClass: 'hovered'
         // drop: handleCardDrop
@@ -113,12 +114,12 @@
 
       <!-- Red scquare -->
       <!-- <div id="makeMeDraggable"> </div> -->
-      <div id="chessboard" style="padding: 50px; width: 66%; height: auto"> </div>
+      <div id="chessboard" style="padding: 50px; width: 66%; height: center"> </div>
 
       <div hidden id="messages-card-container" class="mdl-cell mdl-cell--12-col mdl-grid">
           
         <!-- Messages container -->
-        <div id="messages-card" class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--6-col-tablet mdl-cell--6-col-desktop">
+        <div id="messages-card" class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--6-col-tablet mdl-cell--6-col-desktop" style="margin-top: -70px">
           <div class="mdl-card__supporting-text mdl-color-text--grey-600">
             <div id="messages">
               <span id="message-filler"></span>
