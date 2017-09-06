@@ -312,9 +312,6 @@ FriendlyChat.prototype.loadChessboard = function() {
 
     for( var piece in pieces )
     {
-      console.log(piece);
-      console.log(pieces[piece]);
-  
       $('<img src="../images/pieces/'+piece+'.png" id="'+ pieces[piece].key +'" style="z-index : 1; margin-top:-29%; height: 100%; width: 100%; ">').appendTo('#'+pieces[piece]).draggable( {
         containment: '#content',
         cursor: 'move',
@@ -327,11 +324,9 @@ FriendlyChat.prototype.loadChessboard = function() {
 
 };
 
-function pieceDrop( event, ui ) {
-
-    ui.draggable.draggable( 'disable' );
-    $(this).droppable( 'disable' );
+function pieceDrop( event, ui ) 
+{
+    // $(this).droppable( 'disable' );
     ui.draggable.position( { of: $(this), my: 'left top', at: 'left top' } );
     ui.draggable.draggable( 'option', 'revert', false );
- 
 }
