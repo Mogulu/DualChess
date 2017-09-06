@@ -140,17 +140,15 @@
         if(i%2 == 0)
         {
           $('<div id="'+ lettre + chiffre +'" style="font-size: 75%; color: white; background-color: black; position: absolute; height: 70%; width: 6%; margin-left:'+ (6*((i-1)%8)) +'%;margin-top:'+ (6 * Math.floor( (i-1)/8) ) +'%;">' + lettre + chiffre + '</div>').appendTo( '#chessboard' ).droppable( {
-            // accept: '#cardPile div',
-            hoverClass: 'hovered'
-            // drop: handleCardDrop
+            hoverClass: 'hovered',
+            drop: pieceDrop
           } );
         }
         else
         {
           $('<div id="'+ lettre + chiffre +'" style="font-size: 75%; background-color: white; position: absolute; height: 70%; width: 6%; margin-left:'+ (6*((i-1)%8)) +'%;margin-top:'+ (6 * Math.floor( (i-1)/8) ) +'%;">' + lettre + chiffre + '</div>').appendTo( '#chessboard' ).droppable( {
-            // accept: '#cardPile div',
-            hoverClass: 'hovered'
-            // drop: handleCardDrop
+            hoverClass: 'hovered',
+            drop: pieceDrop
           } );
         }
       }
@@ -159,17 +157,15 @@
         if(i%2 == 0)
         {
           $('<div id="'+ lettre + chiffre +'" style="font-size: 75%; background-color: white; position: absolute; height: 70%; width: 6%; margin-left:'+ (6*((i-1)%8)) +'%;margin-top:'+ (6 * Math.floor( (i-1)/8) ) +'%;">' + lettre + chiffre + '</div>').appendTo( '#chessboard' ).droppable( {
-            // accept: '#cardPile div',
-            hoverClass: 'hovered'
-            // drop: handleCardDrop
+            hoverClass: 'hovered',
+            drop: pieceDrop
           } );
         }
         else
         {
           $('<div id="'+ lettre + chiffre +'" style="font-size: 75%; color: white; background-color: black; position: absolute; height: 70%; width: 6%; margin-left:'+ (6*((i-1)%8)) +'%;margin-top:'+ (6 * Math.floor( (i-1)/8) ) +'%;">' + lettre + chiffre + '</div>').appendTo( '#chessboard' ).droppable( {
-            // accept: '#cardPile div',
-            hoverClass: 'hovered'
-            // drop: handleCardDrop
+            hoverClass: 'hovered',
+            drop: pieceDrop
           } );
         }
       }
