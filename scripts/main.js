@@ -319,7 +319,7 @@ FriendlyChat.prototype.loadChessboard = function() {
       {
         if($("#"+pieces[piece]).find("img")[0].id != piece)
         {
-          $('<img src="../images/pieces/'+piece+'.png" id="'+ piece +'" style="z-index : 1; margin-top:-29%; height: 100%; width: 100%; ">').appendTo('#'+pieces[piece]).draggable( {
+          $('<img src="../images/pieces/'+piece+'.png" id="'+ piece +'" style="margin-top:-29%; height: 100%; width: 100%; ">').appendTo('#'+pieces[piece]).draggable( {
             containment: '#content',
             cursor: 'move',
             revert: true
@@ -328,7 +328,7 @@ FriendlyChat.prototype.loadChessboard = function() {
       }
       else
       {
-        $('<img src="../images/pieces/'+piece+'.png" id="'+ piece +'" style="z-index : 1; margin-top:-29%; height: 100%; width: 100%; ">').appendTo('#'+pieces[piece]).draggable( {
+        $('<img src="../images/pieces/'+piece+'.png" id="'+ piece +'" style="margin-top:-29%; height: 100%; width: 100%; ">').appendTo('#'+pieces[piece]).draggable( {
           containment: '#content',
           cursor: 'move',
           revert: true
@@ -352,11 +352,17 @@ function pieceDrop( event, ui )
     lastCase = snapshot.val()[ui.draggable[0].id];
   });
 
-  var data = {};
-  data[pieceId] = newCase;
+  if( lastCase != newCase)
+  {
+    $( "#" + lastCase ).empty();
+    $('#'+lastCase).html(lastCase);
 
-  // update database
-  var key = firebase.database().ref('/games/'+idGame+'/pieces').update(data);
+    var data = {};
+    data[pieceId] = newCase;
+
+    // update database
+    var key = firebase.database().ref('/games/'+idGame+'/pieces').update(data);
+  }
   
   // $(this).droppable( 'disable' );
 
