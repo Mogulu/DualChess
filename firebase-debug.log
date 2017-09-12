@@ -34,3 +34,39 @@
 [info] i  hosting: Serving hosting files from: ./
 [info] +  hosting: Local server: http://localhost:5000
 
+[debug] [2017-09-12T06:46:40.038Z] ----------------------------------------------------------------------
+[debug] [2017-09-12T06:46:40.062Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Asus-Pc\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
+[debug] [2017-09-12T06:46:40.062Z] CLI Version:   3.10.0
+[debug] [2017-09-12T06:46:40.063Z] Platform:      win32
+[debug] [2017-09-12T06:46:40.063Z] Node Version:  v6.11.2
+[debug] [2017-09-12T06:46:40.063Z] Time:          Tue Sep 12 2017 08:46:40 GMT+0200 (Paris, Madrid (heure d’été))
+[debug] [2017-09-12T06:46:40.063Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2017-09-12T06:46:40.158Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2017-09-12T06:46:40.158Z] > authorizing via signed-in user
+[debug] [2017-09-12T06:46:40.160Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2017-09-12T06:46:40.160Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token { refresh_token: '1/CZPFmKdScAcNZVfQ6jE0zukgdbrILZXqAA6cuyPXrnw',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Tue Sep 12 2017 08:46:40 GMT+0200 (Paris, Madrid (heure d’été))
+[debug] [2017-09-12T06:46:40.300Z] <<< HTTP RESPONSE 200
+[debug] [2017-09-12T06:46:40.321Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/dualchess  
+ Tue Sep 12 2017 08:46:40 GMT+0200 (Paris, Madrid (heure d’été))
+[debug] [2017-09-12T06:46:41.019Z] <<< HTTP RESPONSE 200
+[debug] [2017-09-12T06:46:41.020Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/dualchess/tokens  
+ Tue Sep 12 2017 08:46:41 GMT+0200 (Paris, Madrid (heure d’été))
+[debug] [2017-09-12T06:46:41.562Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from 'C:\Users\Asus-Pc\Dropbox\transfert\ESIEA\5A\WEB\DualChess'...
+[info] 
+[debug] [2017-09-12T06:46:41.669Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/dualchess  
+ Tue Sep 12 2017 08:46:41 GMT+0200 (Paris, Madrid (heure d’été))
+[debug] [2017-09-12T06:46:42.401Z] <<< HTTP RESPONSE 200
+[debug] [2017-09-12T06:46:42.401Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/155258817437/clients/_:getWebAppConfig  
+ Tue Sep 12 2017 08:46:42 GMT+0200 (Paris, Madrid (heure d’été))
+[debug] [2017-09-12T06:46:42.872Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: ./
+[info] +  hosting: Local server: http://localhost:5000
+

@@ -15,6 +15,8 @@
  */
 'use strict';
 
+var idGame;
+
 // Initializes FriendlyChat.
 function FriendlyChat() {
   this.checkSetup();
@@ -307,16 +309,31 @@ FriendlyChat.prototype.loadChessboard = function() {
       if (list.hasOwnProperty(key)) 
       {
         pieces = list[key].pieces ? list[key].pieces : '';
+        idGame = key;
       }
     }
 
     for( var piece in pieces )
     {
-      $('<img src="../images/pieces/'+piece+'.png" id="'+ pieces[piece].key +'" style="z-index : 1; margin-top:-29%; height: 100%; width: 100%; ">').appendTo('#'+pieces[piece]).draggable( {
-        containment: '#content',
-        cursor: 'move',
-        revert: true
-      } );
+      if($("#"+pieces[piece]).find("img").length > 0)
+      {
+        if($("#"+pieces[piece]).find("img")[0].id != piece)
+        {
+          $('<img src="../images/pieces/'+piece+'.png" id="'+ piece +'" style="z-index : 1; margin-top:-29%; height: 100%; width: 100%; ">').appendTo('#'+pieces[piece]).draggable( {
+            containment: '#content',
+            cursor: 'move',
+            revert: true
+          } );
+        }
+      }
+      else
+      {
+        $('<img src="../images/pieces/'+piece+'.png" id="'+ piece +'" style="z-index : 1; margin-top:-29%; height: 100%; width: 100%; ">').appendTo('#'+pieces[piece]).draggable( {
+          containment: '#content',
+          cursor: 'move',
+          revert: true
+        } );
+      }
     }
   }, function (error) {
      console.log("Error: " + error.code);
@@ -326,7 +343,23 @@ FriendlyChat.prototype.loadChessboard = function() {
 
 function pieceDrop( event, ui ) 
 {
-    // $(this).droppable( 'disable' );
-    ui.draggable.position( { of: $(this), my: 'left top', at: 'left top' } );
-    ui.draggable.draggable( 'option', 'revert', false );
+  var ref = firebase.database().ref('/games/'+idGame+'/pieces');
+  var newCase = $(this)[0].id;
+  var pieceId = ui.draggable[0].id;
+  var lastCase;
+  
+  ref.once("value", function(snapshot) {
+    lastCase = snapshot.val()[ui.draggable[0].id];
+  });
+
+  var data = {};
+  data[pieceId] = newCase;
+
+  // update database
+  var key = firebase.database().ref('/games/'+idGame+'/pieces').update(data);
+  
+  // $(this).droppable( 'disable' );
+
+  ui.draggable.position( { of: $(this), my: 'left top', at: 'left top' } );
+  ui.draggable.draggable( 'option', 'revert', false );
 }
