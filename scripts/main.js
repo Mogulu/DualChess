@@ -462,14 +462,30 @@ function checkDeplacement(pieceId, lastCase, newCase)
         case "R":
             if(lastPos[0] == newPos[0] || lastPos[1] == newPos[1])
             {
+                // check if a piece is between lastPos and newPos
                 for (var key in listPieces) 
                 {
                     var pos = nameCaseToPosition(listPieces[key])
-                    if((pos[1] < newPos[1] && pos[1] > lastPos[1]) || (pos[1] > newPos[1] && pos[1] < lastPos[1]) || (pos[0] < newPos[0] && pos[0] > lastPos[0]) || (pos[0] > newPos[0] && pos[0] < lastPos[0]))
+                    // if a piece is between lastPos and newPos
+                    if((pos[1] < newPos[1] && pos[1] > lastPos[1]) || 
+                        (pos[1] > newPos[1] && pos[1] < lastPos[1]) || 
+                        (pos[0] < newPos[0] && pos[0] > lastPos[0]) || 
+                        (pos[0] > newPos[0] && pos[0] < lastPos[0]))
                     {
                         return false;
                     }
                 }
+                return true;
+            }
+            else
+                return false;
+            break;
+        case "N":
+            var x = (lastPos[0] - newPos[0]);
+            var y = (lastPos[1] - newPos[1]);
+
+            if((Math.abs(x)==1 && Math.abs(y)==2) || (Math.abs(x)==2 && Math.abs(y)==1))
+            {
                 return true;
             }
             else
