@@ -522,6 +522,17 @@ function checkDeplacement(pieceId, lastCase, newCase)
             else
                 return false;
             break;
+        case "K":
+            var x = (lastPos[0] - newPos[0]);
+            var y = (lastPos[1] - newPos[1]);
+
+            if( Math.abs(x) <= 1 && Math.abs(y) <= 1)
+            {
+                return true;
+            }
+            else
+                return false;
+            break;
     }
 
     return true;
