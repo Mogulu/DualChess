@@ -22,3 +22,7 @@
 [debug] [2017-09-19T07:47:05.804Z] <<< HTTP RESPONSE 200
 [debug] [2017-09-19T07:47:05.805Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/155258817437/clients/_:getWebAppConfig  
  Tue Sep 19 2017 09:47:05 GMT+0200 (Paris, Madrid (heure d’été))
+[debug] [2017-09-19T07:47:06.226Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: ./
+[info] +  hosting: Local server: http://localhost:5000
+

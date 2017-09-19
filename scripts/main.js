@@ -448,11 +448,30 @@ function checkDeplacement(pieceId, lastCase, newCase)
     var lastPos = nameCaseToPosition(lastCase);
     var newPos = nameCaseToPosition(newCase);
 
+    var listPieces = findPieces();
+    for (var key in listPieces) 
+    {
+        if(listPieces[key] == newCase && key.charAt(0) == pieceId.charAt(0))
+        {
+            return false;
+        }
+    }
+
     switch(pieceId.charAt(2))
     {
         case "R":
             if(lastPos[0] == newPos[0] || lastPos[1] == newPos[1])
+            {
+                for (var key in listPieces) 
+                {
+                    var pos = nameCaseToPosition(listPieces[key])
+                    if((pos[1] < newPos[1] && pos[1] > lastPos[1]) || (pos[1] > newPos[1] && pos[1] < lastPos[1]) || (pos[0] < newPos[0] && pos[0] > lastPos[0]) || (pos[0] > newPos[0] && pos[0] < lastPos[0]))
+                    {
+                        return false;
+                    }
+                }
                 return true;
+            }
             else
                 return false;
             break;
