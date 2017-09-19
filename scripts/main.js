@@ -467,11 +467,14 @@ function checkDeplacement(pieceId, lastCase, newCase)
                 {
                     var pos = nameCaseToPosition(listPieces[key])
                     // if a piece is between lastPos and newPos
-                    if((pos[1] < newPos[1] && pos[1] > lastPos[1]) || 
+                    if(((pos[1] < newPos[1] && pos[1] > lastPos[1]) || 
                         (pos[1] > newPos[1] && pos[1] < lastPos[1]) || 
                         (pos[0] < newPos[0] && pos[0] > lastPos[0]) || 
-                        (pos[0] > newPos[0] && pos[0] < lastPos[0]))
+                        (pos[0] > newPos[0] && pos[0] < lastPos[0]) ) && (pos[0] == newPos[0] || pos[1] == newPos[1]))
                     {
+                        console.log(lastPos);
+                        console.log(pos);
+                        console.log(newPos);
                         return false;
                     }
                 }
@@ -486,6 +489,34 @@ function checkDeplacement(pieceId, lastCase, newCase)
 
             if((Math.abs(x)==1 && Math.abs(y)==2) || (Math.abs(x)==2 && Math.abs(y)==1))
             {
+                return true;
+            }
+            else
+                return false;
+            break;
+        case "B":
+            var x = (lastPos[0] - newPos[0]);
+            var y = (lastPos[1] - newPos[1]);
+
+            if( Math.abs(x) == Math.abs(y) )
+            {
+                // check if a piece is between lastPos and newPos
+                for (var key in listPieces) 
+                {
+                    var pos = nameCaseToPosition(listPieces[key])
+                    // if a piece is between lastPos and newPos
+                    if(((pos[1] < newPos[1] && pos[1] > lastPos[1]) || 
+                        (pos[1] > newPos[1] && pos[1] < lastPos[1]) || 
+                        (pos[0] < newPos[0] && pos[0] > lastPos[0]) || 
+                        (pos[0] > newPos[0] && pos[0] < lastPos[0])) && (Math.abs(pos[0] - newPos[0]) == Math.abs(pos[1] - newPos[1])) 
+                                                                    && (Math.abs(pos[0] - lastPos[0]) == Math.abs(pos[1] - lastPos[1])))
+                    {
+                        console.log(lastPos);
+                        console.log(pos);
+                        console.log(newPos);
+                        return false;
+                    }
+                }
                 return true;
             }
             else
