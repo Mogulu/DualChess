@@ -310,8 +310,6 @@ FriendlyChat.prototype.loadChessboard = function() {
         idGame = Object.keys(snapshot.val())[0];
         colorPlayer = snapshot.val()[idGame]['colorPlayer'];
 
-        pieceWhichAttackTheCase("E5", "B");
-
         var listPieces = findPieces();
         // remove all pieces
         for (var key in listPieces) 
@@ -453,6 +451,21 @@ function checkDeplacement(pieceId, lastCase, newCase)
     for (var key in listPieces) 
     {
         if(listPieces[key] == newCase && key.charAt(0) == pieceId.charAt(0))
+        {
+            return false;
+        }
+    }
+
+    if(pieceId.charAt(2) != "K")
+    {
+        if(pieceWhichAttackTheCase( nameCaseToPosition(listPieces[pieceId.charAt(0)+"_K"]), pieceId.charAt(0), pieceId, newCase) == true)
+        {
+            return false;
+        }
+    }
+    else
+    {
+        if(pieceWhichAttackTheCase( newPos, pieceId.charAt(0), pieceId, newCase) == true)
         {
             return false;
         }
@@ -692,12 +705,13 @@ function nameCaseToPosition(nameCase)
     return pos;
 }
 
-function pieceWhichAttackTheCase(casePos, colorPiece)
+function pieceWhichAttackTheCase(casePos, colorPiece, newPiece="", newPos="")
 {
     var listPieces = findPieces();
-    var flagEchecs = 1;
+    if(newPiece != "")
+        listPieces[newPiece] = newPos;
 
-    casePos = nameCaseToPosition(casePos);
+    var flagEchecs = 1;
 
     for (var key1 in listPieces) 
     {
@@ -705,7 +719,7 @@ function pieceWhichAttackTheCase(casePos, colorPiece)
         {
             case "R":
                 flagEchecs = 1;
-                var posPieceEchecs = nameCaseToPosition(listPieces[key1])
+                var posPieceEchecs = nameCaseToPosition(listPieces[key1]);
 
                 if((casePos[0] == posPieceEchecs[0] || casePos[1] == posPieceEchecs[1]) && colorPiece != key1.charAt(0))
                 {
@@ -721,7 +735,6 @@ function pieceWhichAttackTheCase(casePos, colorPiece)
                                         (posPieceBetween[0] == posPieceEchecs[0] || 
                                         posPieceBetween[1] == posPieceEchecs[1]))
                         {
-                            console.log("Pas échecs");
                             flagEchecs = 0;
                         }
                     }
@@ -755,20 +768,20 @@ function pieceWhichAttackTheCase(casePos, colorPiece)
     
                 if( Math.abs(x) == Math.abs(y) && colorPiece != key1.charAt(0))
                 {
+                    
                     // check if a piece is between lastPos and listPieces
                     for (var key2 in listPieces) 
                     {
-                        var posPieceBetween = nameCaseToPosition(listPieces[key2])
+                        var posPieceBetween = nameCaseToPosition(listPieces[key2]);
                         // if a piece is between lastPos and listPieces
                         if(((posPieceBetween[1] < posPieceEchecs[1] && posPieceBetween[1] > casePos[1]) || 
                             (posPieceBetween[1] > posPieceEchecs[1] && posPieceBetween[1] < casePos[1]) || 
                             (posPieceBetween[0] < posPieceEchecs[0] && posPieceBetween[0] > casePos[0]) || 
-                            (posPieceBetween[0] > posPieceEchecs[0] && posPieceBetween[0] < casePos[0])) && ((Math.abs(posPieceBetween[0] - posPieceEchecs[0]) == Math.abs(posPieceBetween[1] - posPieceEchecs[1])) 
-                                                                        && (Math.abs(posPieceBetween[0] - casePos[0]) == Math.abs(posPieceBetween[1] - casePos[1]))
-                                                                    )
+                            (posPieceBetween[0] > posPieceEchecs[0] && posPieceBetween[0] < casePos[0])) 
+                                    && ((Math.abs(posPieceBetween[0] - posPieceEchecs[0]) == Math.abs(posPieceBetween[1] - posPieceEchecs[1])) 
+                                    && (Math.abs(posPieceBetween[0] - casePos[0]) == Math.abs(posPieceBetween[1] - casePos[1])))
                             )
                         {
-                            console.log("Pas échecs");
                             flagEchecs = 0;
                         }
                     }
@@ -780,165 +793,86 @@ function pieceWhichAttackTheCase(casePos, colorPiece)
                     }
                 }
                 break;
-            // case "K":
-            //     var x = (lastPos[0] - listPieces[key]);
-            //     var y = (lastPos[1] - listPieces[key]);
+            case "K":
+                var posPieceEchecs = nameCaseToPosition(listPieces[key1]);
+            
+                var x = (casePos[0] - posPieceEchecs[0]);
+                var y = (casePos[1] - posPieceEchecs[1]);
     
-            //     if( Math.abs(x) <= 1 && Math.abs(y) <= 1)
-            //     {
-            //         return true;
-            //     }
-            //     else
-            //         return false;
-            //     break;
-            // case "Q":
-            //     var x = (lastPos[0] - listPieces[key]);
-            //     var y = (lastPos[1] - listPieces[key]);
-    
-            //     if(lastPos[0] == listPieces[key] || lastPos[1] == listPieces[key])
-            //     {
-            //         // check if a piece is between lastPos and listPieces
-            //         for (var key in listPieces) 
-            //         {
-            //             var pos = nameCaseToPosition(listPieces[key])
-            //             // if a piece is between lastPos and listPieces
-            //             if(((pos[1] < listPieces[key] && pos[1] > lastPos[1]) || 
-            //                 (pos[1] > listPieces[key] && pos[1] < lastPos[1]) || 
-            //                 (pos[0] < listPieces[key] && pos[0] > lastPos[0]) || 
-            //                 (pos[0] > listPieces[key] && pos[0] < lastPos[0]) ) && (pos[0] == listPieces[key] || pos[1] == listPieces[key]))
-            //             {
-            //                 return false;
-            //             }
-            //         }
-            //         return true;
-            //     }
-            //     else if( Math.abs(x) == Math.abs(y) )
-            //     {
-            //         // check if a piece is between lastPos and listPieces
-            //         for (var key in listPieces) 
-            //         {
-            //             var pos = nameCaseToPosition(listPieces[key])
-            //             // if a piece is between lastPos and listPieces
-            //             if(((pos[1] < listPieces[key] && pos[1] > lastPos[1]) || 
-            //                 (pos[1] > listPieces[key] && pos[1] < lastPos[1]) || 
-            //                 (pos[0] < listPieces[key] && pos[0] > lastPos[0]) || 
-            //                 (pos[0] > listPieces[key] && pos[0] < lastPos[0])) && ((Math.abs(pos[0] - listPieces[key]) == Math.abs(pos[1] - listPieces[key])) 
-            //                                                             && (Math.abs(pos[0] - lastPos[0]) == Math.abs(pos[1] - lastPos[1]))
-            //                                                         )
-            //                 )
-            //             {
-            //                 return false;
-            //             }
-            //         }
-            //         return true;
-            //     }
-            //     else
-            //         return false;
-            //     break;
-            // case "P":
-            //     var color = pieceId.charAt(0);
-            //     var x = listPieces[key]-lastPos[0];
-            //     var y = listPieces[key]-lastPos[1];
-    
-            //     if(color == "B" && y >= -2 && y < 0)
-            //     {
-            //         if (y == -2 && lastCase[1] == 7)
-            //         {
-            //             // check if a piece is between lastPos and listPieces
-            //             for (var key in listPieces) 
-            //             {
-            //                 var pos = nameCaseToPosition(listPieces[key])
-            //                 // if a piece is between lastPos and listPieces
-            //                 if(pos[0] == listPieces[key] && pos[1] == listPieces[key] + 1)
-            //                 {
-            //                     return false;
-            //                 }
-            //             }
-            //             return true;
-            //         }
-            //         else if (y == -1 && x == 0)
-            //         {
-            //             // check if a piece is between lastPos and listPieces
-            //             for (var key in listPieces) 
-            //             {
-            //                 var pos = nameCaseToPosition(listPieces[key])
-            //                 // if a piece is between lastPos and listPieces
-            //                 if(pos[0] == listPieces[key] && pos[1] == listPieces[key])
-            //                 {
-            //                     return false;
-            //                 }
-            //             }
-            //             return true;
-            //         }
-            //         else if (y == -1 && (x == -1 || x == 1))
-            //         {
-            //             // check if a piece is between lastPos and listPieces
-            //             for (var key in listPieces) 
-            //             {
-            //                 var pos = nameCaseToPosition(listPieces[key])
-            //                 // if a piece is between lastPos and listPieces
-            //                 if(pos[0] == listPieces[key] && pos[1] == listPieces[key])
-            //                 {
-            //                     return true;
-            //                 }
-            //             }
-            //             return false;
-            //         }
-            //         else
-            //             return false;
-            //     }
-            //     else if (color == "W" && y <= 2 && y > 0)
-            //     {
-            //         if (y == 2 && lastCase[1] == 2)
-            //         {
-            //             // check if a piece is between lastPos and listPieces
-            //             for (var key in listPieces) 
-            //             {
-            //                 var pos = nameCaseToPosition(listPieces[key])
-            //                 // if a piece is between lastPos and listPieces
-            //                 if(pos[0] == listPieces[key] && pos[1] == listPieces[key] - 1)
-            //                 {
-            //                     return false;
-            //                 }
-            //             }
-            //             return true;
-            //         }
-            //         else if (y == 1 && x == 0)
-            //         {
-            //             // check if a piece is between lastPos and listPieces
-            //             for (var key in listPieces) 
-            //             {
-            //                 var pos = nameCaseToPosition(listPieces[key])
-            //                 // if a piece is between lastPos and listPieces
-            //                 if(pos[0] == listPieces[key] && pos[1] == listPieces[key])
-            //                 {
-            //                     return false;
-            //                 }
-            //             }
-            //             return true;
-            //         }
-            //         else if (y == 1 && (x == -1 || x == 1))
-            //         {
-            //             // check if a piece is between lastPos and listPieces
-            //             for (var key in listPieces) 
-            //             {
-            //                 var pos = nameCaseToPosition(listPieces[key])
-            //                 // if a piece is between lastPos and listPieces
-            //                 if(pos[0] == listPieces[key] && pos[1] == listPieces[key])
-            //                 {
-            //                     return true;
-            //                 }
-            //             }
-            //             return false;
-            //         }
-            //         else
-            //             return false;
-            //     }
-            //     else
-            //         return false;
-    
-            //     break;
+                if( Math.abs(x) <= 1 && Math.abs(y) <= 1 && colorPiece != key1.charAt(0))
+                {
+                    console.log("ECHECS");
+                    return true;
+                }
+                break;
+            case "Q":
+                flagEchecs = 1;
+                var posPieceEchecs = nameCaseToPosition(listPieces[key1]);
+                var x = (casePos[0] - posPieceEchecs[0]);
+                var y = (casePos[1] - posPieceEchecs[1]);
+
+                if((casePos[0] == posPieceEchecs[0] || casePos[1] == posPieceEchecs[1]) && colorPiece != key1.charAt(0))
+                {
+                    // check if a piece is between lastPos and newPos
+                    for (var key2 in listPieces) 
+                    {
+                        var posPieceBetween = nameCaseToPosition(listPieces[key2])
+                        // if a piece is between lastPos and newPos
+                        if(((posPieceBetween[1] < posPieceEchecs[1] && posPieceBetween[1] > casePos[1]) || 
+                            (posPieceBetween[1] > posPieceEchecs[1] && posPieceBetween[1] < casePos[1]) || 
+                            (posPieceBetween[0] < posPieceEchecs[0] && posPieceBetween[0] > casePos[0]) || 
+                            (posPieceBetween[0] > posPieceEchecs[0] && posPieceBetween[0] < casePos[0])) && 
+                                        (posPieceBetween[0] == posPieceEchecs[0] || 
+                                        posPieceBetween[1] == posPieceEchecs[1]))
+                        {
+                            flagEchecs = 0;
+                        }
+                    }
+
+                    if(flagEchecs == 1)
+                    {
+                        console.log("ECHECS");
+                        return true;
+                    }
+                }
+                else if( Math.abs(x) == Math.abs(y) && colorPiece != key1.charAt(0))
+                {
+                    // check if a piece is between lastPos and listPieces
+                    for (var key2 in listPieces) 
+                    {
+                        var posPieceBetween = nameCaseToPosition(listPieces[key2])
+                        // if a piece is between lastPos and listPieces
+                        if(((posPieceBetween[1] < posPieceEchecs[1] && posPieceBetween[1] > casePos[1]) || 
+                            (posPieceBetween[1] > posPieceEchecs[1] && posPieceBetween[1] < casePos[1]) || 
+                            (posPieceBetween[0] < posPieceEchecs[0] && posPieceBetween[0] > casePos[0]) || 
+                            (posPieceBetween[0] > posPieceEchecs[0] && posPieceBetween[0] < casePos[0])) 
+                                        && ((Math.abs(posPieceBetween[0] - posPieceEchecs[0]) == Math.abs(posPieceBetween[1] - posPieceEchecs[1])) 
+                                        && (Math.abs(posPieceBetween[0] - casePos[0]) == Math.abs(posPieceBetween[1] - casePos[1])))
+                            )
+                        {
+                            flagEchecs = 0;
+                        }
+                    }
+                    
+                    if(flagEchecs == 1)
+                    {
+                        console.log("ECHECS");
+                        return true;
+                    }
+                }
+                break;
+            case "P":
+                var posPieceEchecs = nameCaseToPosition(listPieces[key1]);
+            
+                var x = (casePos[0] - posPieceEchecs[0]);
+                var y = (casePos[1] - posPieceEchecs[1]);
+                if(colorPiece != key1.charAt(0) && (x==1 || x==-1) && y==1)
+                {
+                    console.log("ECHECS");
+                    return true;
+                }
+                break;
         }
     }
-    return true;
+    return false;
 }

@@ -1,28 +1,36 @@
-[debug] [2017-09-19T07:47:01.794Z] ----------------------------------------------------------------------
-[debug] [2017-09-19T07:47:01.796Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Asus-Pc\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
-[debug] [2017-09-19T07:47:01.797Z] CLI Version:   3.10.0
-[debug] [2017-09-19T07:47:01.797Z] Platform:      win32
-[debug] [2017-09-19T07:47:01.797Z] Node Version:  v6.11.2
-[debug] [2017-09-19T07:47:01.798Z] Time:          Tue Sep 19 2017 09:47:01 GMT+0200 (Paris, Madrid (heure d’été))
-[debug] [2017-09-19T07:47:01.798Z] ----------------------------------------------------------------------
+[debug] [2017-09-19T15:53:41.070Z] ----------------------------------------------------------------------
+[debug] [2017-09-19T15:53:41.074Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Asus-Pc\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
+[debug] [2017-09-19T15:53:41.075Z] CLI Version:   3.10.0
+[debug] [2017-09-19T15:53:41.075Z] Platform:      win32
+[debug] [2017-09-19T15:53:41.075Z] Node Version:  v6.11.2
+[debug] [2017-09-19T15:53:41.076Z] Time:          Tue Sep 19 2017 17:53:41 GMT+0200 (Paris, Madrid (heure d’été))
+[debug] [2017-09-19T15:53:41.076Z] ----------------------------------------------------------------------
 [debug] 
-[debug] [2017-09-19T07:47:01.811Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2017-09-19T07:47:01.812Z] > authorizing via signed-in user
-[debug] [2017-09-19T07:47:01.814Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/dualchess  
- Tue Sep 19 2017 09:47:01 GMT+0200 (Paris, Madrid (heure d’été))
-[debug] [2017-09-19T07:47:02.437Z] <<< HTTP RESPONSE 200
-[debug] [2017-09-19T07:47:02.439Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/dualchess/tokens  
- Tue Sep 19 2017 09:47:02 GMT+0200 (Paris, Madrid (heure d’été))
-[debug] [2017-09-19T07:47:03.030Z] <<< HTTP RESPONSE 200
+[debug] [2017-09-19T15:53:41.187Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2017-09-19T15:53:41.187Z] > authorizing via signed-in user
+[debug] [2017-09-19T15:53:41.189Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2017-09-19T15:53:41.189Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token { refresh_token: '1/CZPFmKdScAcNZVfQ6jE0zukgdbrILZXqAA6cuyPXrnw',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Tue Sep 19 2017 17:53:41 GMT+0200 (Paris, Madrid (heure d’été))
+[debug] [2017-09-19T15:53:41.340Z] <<< HTTP RESPONSE 200
+[debug] [2017-09-19T15:53:41.436Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/dualchess  
+ Tue Sep 19 2017 17:53:41 GMT+0200 (Paris, Madrid (heure d’été))
+[debug] [2017-09-19T15:53:42.148Z] <<< HTTP RESPONSE 200
+[debug] [2017-09-19T15:53:42.148Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/dualchess/tokens  
+ Tue Sep 19 2017 17:53:42 GMT+0200 (Paris, Madrid (heure d’été))
+[debug] [2017-09-19T15:53:42.683Z] <<< HTTP RESPONSE 200
 [info] 
 [info] === Serving from 'C:\Users\Asus-Pc\Dropbox\transfert\ESIEA\5A\WEB\DualChess'...
 [info] 
-[debug] [2017-09-19T07:47:03.037Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/dualchess  
- Tue Sep 19 2017 09:47:03 GMT+0200 (Paris, Madrid (heure d’été))
-[debug] [2017-09-19T07:47:05.804Z] <<< HTTP RESPONSE 200
-[debug] [2017-09-19T07:47:05.805Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/155258817437/clients/_:getWebAppConfig  
- Tue Sep 19 2017 09:47:05 GMT+0200 (Paris, Madrid (heure d’été))
-[debug] [2017-09-19T07:47:06.226Z] <<< HTTP RESPONSE 200
+[debug] [2017-09-19T15:53:42.688Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/dualchess  
+ Tue Sep 19 2017 17:53:42 GMT+0200 (Paris, Madrid (heure d’été))
+[debug] [2017-09-19T15:53:43.402Z] <<< HTTP RESPONSE 200
+[debug] [2017-09-19T15:53:43.403Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/155258817437/clients/_:getWebAppConfig  
+ Tue Sep 19 2017 17:53:43 GMT+0200 (Paris, Madrid (heure d’été))
+[debug] [2017-09-19T15:53:43.816Z] <<< HTTP RESPONSE 200
 [info] i  hosting: Serving hosting files from: ./
 [info] +  hosting: Local server: http://localhost:5000
 
