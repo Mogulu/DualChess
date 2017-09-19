@@ -508,8 +508,10 @@ function checkDeplacement(pieceId, lastCase, newCase)
                     if(((pos[1] < newPos[1] && pos[1] > lastPos[1]) || 
                         (pos[1] > newPos[1] && pos[1] < lastPos[1]) || 
                         (pos[0] < newPos[0] && pos[0] > lastPos[0]) || 
-                        (pos[0] > newPos[0] && pos[0] < lastPos[0])) && (Math.abs(pos[0] - newPos[0]) == Math.abs(pos[1] - newPos[1])) 
-                                                                    && (Math.abs(pos[0] - lastPos[0]) == Math.abs(pos[1] - lastPos[1])))
+                        (pos[0] > newPos[0] && pos[0] < lastPos[0])) && ((Math.abs(pos[0] - newPos[0]) == Math.abs(pos[1] - newPos[1])) 
+                                                                    && (Math.abs(pos[0] - lastPos[0]) == Math.abs(pos[1] - lastPos[1]))
+                                                                )
+                        )
                     {
                         console.log(lastPos);
                         console.log(pos);
@@ -528,6 +530,56 @@ function checkDeplacement(pieceId, lastCase, newCase)
 
             if( Math.abs(x) <= 1 && Math.abs(y) <= 1)
             {
+                return true;
+            }
+            else
+                return false;
+            break;
+        case "Q":
+            var x = (lastPos[0] - newPos[0]);
+            var y = (lastPos[1] - newPos[1]);
+
+            if(lastPos[0] == newPos[0] || lastPos[1] == newPos[1])
+            {
+                // check if a piece is between lastPos and newPos
+                for (var key in listPieces) 
+                {
+                    var pos = nameCaseToPosition(listPieces[key])
+                    // if a piece is between lastPos and newPos
+                    if(((pos[1] < newPos[1] && pos[1] > lastPos[1]) || 
+                        (pos[1] > newPos[1] && pos[1] < lastPos[1]) || 
+                        (pos[0] < newPos[0] && pos[0] > lastPos[0]) || 
+                        (pos[0] > newPos[0] && pos[0] < lastPos[0]) ) && (pos[0] == newPos[0] || pos[1] == newPos[1]))
+                    {
+                        console.log(lastPos);
+                        console.log(pos);
+                        console.log(newPos);
+                        return false;
+                    }
+                }
+                return true;
+            }
+            else if( Math.abs(x) == Math.abs(y) )
+            {
+                // check if a piece is between lastPos and newPos
+                for (var key in listPieces) 
+                {
+                    var pos = nameCaseToPosition(listPieces[key])
+                    // if a piece is between lastPos and newPos
+                    if(((pos[1] < newPos[1] && pos[1] > lastPos[1]) || 
+                        (pos[1] > newPos[1] && pos[1] < lastPos[1]) || 
+                        (pos[0] < newPos[0] && pos[0] > lastPos[0]) || 
+                        (pos[0] > newPos[0] && pos[0] < lastPos[0])) && ((Math.abs(pos[0] - newPos[0]) == Math.abs(pos[1] - newPos[1])) 
+                                                                    && (Math.abs(pos[0] - lastPos[0]) == Math.abs(pos[1] - lastPos[1]))
+                                                                )
+                        )
+                    {
+                        console.log(lastPos);
+                        console.log(pos);
+                        console.log(newPos);
+                        return false;
+                    }
+                }
                 return true;
             }
             else
