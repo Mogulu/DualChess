@@ -83,8 +83,8 @@ FriendlyChat.prototype.loadMessages = function() {
             this.displayMessage(data.key, val.name, val.text, val.photoUrl, val.imageUrl);
         }.bind(this);
         
-        this.messagesRef.limitToLast(12).on('child_added', setMessage);
-        this.messagesRef.limitToLast(12).on('child_changed', setMessage);
+        this.messagesRef.on('child_added', setMessage);
+        this.messagesRef.on('child_changed', setMessage);
 };
 
 // Saves a new message on the Firebase DB.
@@ -317,6 +317,14 @@ FriendlyChat.prototype.loadChessboard = function() {
             }
         }
 
+        var listPieces = findPieces();
+        // remove all pieces
+        for (var key in listPieces) 
+        {
+            // remove the piece
+            $( "#" + key ).remove();
+        }
+
         // place pieces
         for( var piece in pieces )
         {
@@ -394,11 +402,18 @@ function pieceDrop( event, ui )
     var listPieces;
     
     ref.once("value", function(snapshot) {
-        lastCase = snapshot.val()[ui.draggable[0].id];
+        lastCase = snapshot.val()[pieceId];
     });
 
     if( lastCase != newCase)
     {
+        var flagMoveOK = checkDeplacement(pieceId, lastCase, newCase);
+
+        if(flagMoveOK == false)
+        {
+            return;
+        }
+
         listPieces = findPieces();
         // get pieces position back
         for (var key in listPieces) 
@@ -426,4 +441,32 @@ function pieceDrop( event, ui )
 
     ui.draggable.position( { of: $(this), my: 'left top', at: 'left top' } );
     ui.draggable.draggable( 'option', 'revert', false );
+}
+
+function checkDeplacement(pieceId, lastCase, newCase)
+{
+    var lastPos = nameCaseToPosition(lastCase);
+    var newPos = nameCaseToPosition(newCase);
+
+    switch(pieceId.charAt(2))
+    {
+        case "R":
+            if(lastPos[0] == newPos[0] || lastPos[1] == newPos[1])
+                return true;
+            else
+                return false;
+            break;
+    }
+
+    return true;
+}
+
+function nameCaseToPosition(nameCase)
+{
+    var pos = {};
+
+    pos [0] = nameCase.charCodeAt(0) - 64;
+    pos [1] = nameCase.charCodeAt(1) - 48;
+
+    return pos;
 }
