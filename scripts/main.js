@@ -585,6 +585,85 @@ function checkDeplacement(pieceId, lastCase, newCase)
             else
                 return false;
             break;
+        case "P":
+            var color = pieceId.charAt(0);
+            var x = newPos[0]-lastPos[0];
+            var y = newPos[1]-lastPos[1];
+
+            if(color == "B" && y >= -2 && y < 0)
+            {
+                if (y == -2 && lastCase[1] == 7)
+                    return true;
+                else if (y == -1 && x == 0)
+                {
+                    // check if a piece is between lastPos and newPos
+                    for (var key in listPieces) 
+                    {
+                        var pos = nameCaseToPosition(listPieces[key])
+                        // if a piece is between lastPos and newPos
+                        if(pos[0] == newPos[0] && pos[1] == newPos[1])
+                        {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+                else if (y == -1 && (x == -1 || x == 1))
+                {
+                    // check if a piece is between lastPos and newPos
+                    for (var key in listPieces) 
+                    {
+                        var pos = nameCaseToPosition(listPieces[key])
+                        // if a piece is between lastPos and newPos
+                        if(pos[0] == newPos[0] && pos[1] == newPos[1])
+                        {
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+                else
+                    return false;
+            }
+            else if (color == "W" && y <= 2 && y > 0)
+            {
+                if (y == 2 && lastCase[1] == 2)
+                    return true;
+                else if (y == 1 && x == 0)
+                {
+                    // check if a piece is between lastPos and newPos
+                    for (var key in listPieces) 
+                    {
+                        var pos = nameCaseToPosition(listPieces[key])
+                        // if a piece is between lastPos and newPos
+                        if(pos[0] == newPos[0] && pos[1] == newPos[1])
+                        {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+                else if (y == 1 && (x == -1 || x == 1))
+                {
+                    // check if a piece is between lastPos and newPos
+                    for (var key in listPieces) 
+                    {
+                        var pos = nameCaseToPosition(listPieces[key])
+                        // if a piece is between lastPos and newPos
+                        if(pos[0] == newPos[0] && pos[1] == newPos[1])
+                        {
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+                else
+                    return false;
+            }
+            else
+                return false;
+
+            break;
     }
 
     return true;
