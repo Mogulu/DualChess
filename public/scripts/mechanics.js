@@ -45,7 +45,7 @@ ChessGame.prototype.loadChessboard = function() {
                     revert: true
                 } );
 
-                if(userId = snapshot.val()[idGame]['id_black'])
+                if(userId == snapshot.val()[idGame]['id_black'])
                 {
                     if(colorPlayer == 'white')
                     {
@@ -59,7 +59,7 @@ ChessGame.prototype.loadChessboard = function() {
                             $("#"+piece).draggable( 'unable' );
                     }
                 }
-                else if(userId = snapshot.val()[idGame]['id_white'])
+                else if(userId == snapshot.val()[idGame]['id_white'])
                 {
                     if(colorPlayer == 'black')
                     {
