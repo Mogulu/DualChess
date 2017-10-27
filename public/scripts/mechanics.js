@@ -477,7 +477,6 @@ function checkDeplacement(pieceId, lastCase, newCase)
 function nameCaseToPosition(nameCase)
 {
     var pos = {};
-
     pos [0] = nameCase.charCodeAt(0) - 64;
     pos [1] = nameCase.charCodeAt(1) - 48;
 
