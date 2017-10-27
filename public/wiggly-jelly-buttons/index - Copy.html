@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8" />
+	<title>Onglets</title>
+	<style>
+		#onglets{
+			display: none;
+		}
+		#onglets li{
+			position: relative;
+			float: left;
+			list-style: none;
+			padding: 2px 5px 7px;
+			margin-right: 5px;
+			border: 1px solid #1175AE;
+			cursor: pointer;
+			background-color: #EEEEEE;
+			color: #0D5995;
+			z-index: 1;
+		}
+			#onglets .actif{
+			border-bottom: none;
+			font-weight: bold;
+			z-index: 10;
+		}
+			#contenu{
+			clear: both;
+			position: relative;
+			margin: 0 20px;
+			padding: 10px;
+			border: 5px solid #0D5995;
+			z-index: 5;
+			top: -6px;
+			background-color: #EEEEEE;
+			color: #0F67A1;
+			width: 500px;
+			overflow: hidden;
+			border-radius: 15px;
+		}
+	</style>
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
+	<script>
+		$(function() {
+			$('#onglets').css('display', 'block');
+			$('#onglets').click(function(event) {
+				var actuel = event.target;
+				if (!/li/i.test(actuel.nodeName) || actuel.className.indexOf('actif') > -1) {
+					alert(actuel.nodeName)
+					return;
+				}
+				$(actuel).addClass('actif').siblings().removeClass('actif');
+				setDisplay();
+			});
+			function setDisplay() {
+				var modeAffichage;
+				$('#onglets li').each(function(rang) {
+					modeAffichage = $(this).hasClass('actif') ? '' : 'none';
+					$('.item').eq(rang).css('display', modeAffichage);
+				});
+			}
+			setDisplay();
+		});
+	</script>
+</head>
+<body>
+	<h1>Navigation par onglets</h1>
+	<ul id="onglets">
+		<li class="actif">Item 1</li>
+		<li>Item 2</li>
+		<li>Item 3</li>
+	</ul>
+	<div id="contenu">
+		<div class="item">
+			<h2>Premier onglet</h2>
+			Lorem ipsum...
+		</div>
+		<div class="item">
+			<h2>Deuxième onglet</h2>
+			Lorem ipsum...
+		</div>
+		<div class="item">
+			<h2>Troisième onglet</h2>
+			Lorem ipsum...
+		</div>
+	</div>
+</body>
+</html>

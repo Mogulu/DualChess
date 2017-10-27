@@ -1,0 +1,35 @@
+[debug] [2017-10-27T09:41:00.377Z] ----------------------------------------------------------------------
+[debug] [2017-10-27T09:41:00.377Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\rob\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
+[debug] [2017-10-27T09:41:00.377Z] CLI Version:   3.10.1
+[debug] [2017-10-27T09:41:00.377Z] Platform:      win32
+[debug] [2017-10-27T09:41:00.377Z] Node Version:  v6.11.2
+[debug] [2017-10-27T09:41:00.377Z] Time:          Fri Oct 27 2017 11:41:00 GMT+0200 (W. Europe Daylight Time)
+[debug] [2017-10-27T09:41:00.377Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2017-10-27T09:41:00.393Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2017-10-27T09:41:00.393Z] > authorizing via signed-in user
+[debug] [2017-10-27T09:41:00.393Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/dualchess  
+ Fri Oct 27 2017 11:41:00 GMT+0200 (W. Europe Daylight Time)
+[debug] [2017-10-27T09:41:01.394Z] <<< HTTP RESPONSE 200
+[debug] [2017-10-27T09:41:01.394Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/dualchess/tokens  
+ Fri Oct 27 2017 11:41:01 GMT+0200 (W. Europe Daylight Time)
+[debug] [2017-10-27T09:41:02.118Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from 'C:\Users\rob\Desktop\dualchess'...
+[info] 
+[debug] [2017-10-27T09:41:02.122Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/dualchess  
+ Fri Oct 27 2017 11:41:02 GMT+0200 (W. Europe Daylight Time)
+[debug] [2017-10-27T09:41:03.237Z] <<< HTTP RESPONSE 200
+[debug] [2017-10-27T09:41:03.237Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/155258817437/clients/_:getWebAppConfig  
+ Fri Oct 27 2017 11:41:03 GMT+0200 (W. Europe Daylight Time)
+[debug] [2017-10-27T09:41:04.537Z] <<< HTTP RESPONSE 200
+[warn] !  hosting: Port 5000 is not available. Trying another port...
+[debug] [2017-10-27T09:41:04.553Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/dualchess  
+ Fri Oct 27 2017 11:41:04 GMT+0200 (W. Europe Daylight Time)
+[debug] [2017-10-27T09:41:05.635Z] <<< HTTP RESPONSE 200
+[debug] [2017-10-27T09:41:05.635Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/155258817437/clients/_:getWebAppConfig  
+ Fri Oct 27 2017 11:41:05 GMT+0200 (W. Europe Daylight Time)
+[debug] [2017-10-27T09:41:06.270Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] +  hosting: Local server: http://localhost:5004
+

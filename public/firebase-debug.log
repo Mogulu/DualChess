@@ -1,0 +1,28 @@
+[debug] [2017-10-27T08:05:25.547Z] ----------------------------------------------------------------------
+[debug] [2017-10-27T08:05:25.549Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\rob\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
+[debug] [2017-10-27T08:05:25.549Z] CLI Version:   3.10.1
+[debug] [2017-10-27T08:05:25.550Z] Platform:      win32
+[debug] [2017-10-27T08:05:25.550Z] Node Version:  v6.11.2
+[debug] [2017-10-27T08:05:25.550Z] Time:          Fri Oct 27 2017 10:05:25 GMT+0200 (W. Europe Daylight Time)
+[debug] [2017-10-27T08:05:25.550Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2017-10-27T08:05:25.562Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2017-10-27T08:05:25.562Z] > authorizing via signed-in user
+[debug] [2017-10-27T08:05:25.564Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/dualchess  
+ Fri Oct 27 2017 10:05:25 GMT+0200 (W. Europe Daylight Time)
+[debug] [2017-10-27T08:05:26.464Z] <<< HTTP RESPONSE 200
+[debug] [2017-10-27T08:05:26.465Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/dualchess/tokens  
+ Fri Oct 27 2017 10:05:26 GMT+0200 (W. Europe Daylight Time)
+[debug] [2017-10-27T08:05:31.619Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from 'C:\Users\rob\Desktop\dualchess'...
+[info] 
+[debug] [2017-10-27T08:05:31.624Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/dualchess  
+ Fri Oct 27 2017 10:05:31 GMT+0200 (W. Europe Daylight Time)
+[debug] [2017-10-27T08:05:32.461Z] <<< HTTP RESPONSE 200
+[debug] [2017-10-27T08:05:32.462Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/155258817437/clients/_:getWebAppConfig  
+ Fri Oct 27 2017 10:05:32 GMT+0200 (W. Europe Daylight Time)
+[debug] [2017-10-27T08:05:33.032Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] +  hosting: Local server: http://localhost:5000
+

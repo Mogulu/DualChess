@@ -1,0 +1,126 @@
+@font-face {
+    font-family: 'london';
+    src: url('../polices/london.ttf');
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+.hide {
+    display: none;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    min-width: 600px;
+}
+
+
+.header {
+    margin: inherit;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    background: #333;
+    text-align: center;
+}
+#logo{
+    position: relative;
+    width: 350px;
+    padding-left: 100px
+}
+
+#sign-in-status{
+    border-radius:30px;
+    width:50px;
+    height:50px;
+    
+    float:right;
+    padding-top: 6px;
+    margin-right: 50px;
+}
+
+
+#nav {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    overflow: hidden;
+    background-color: #333;
+    font-family: 'london';
+    font-size: 30px;
+}
+
+#nav li {
+    display: inline;
+    list-style: none;
+}
+
+#nav a {
+    display:inline-block;
+    color: white;
+    text-align: center;
+    padding: 10px 16px;
+    margin-bottom: 10px;
+    text-decoration: none;
+}
+
+#nav a:hover {
+    border-radius: 40px;
+    background-color: #ffffff;
+    color: #333;
+}
+
+#nav a.active{
+    color: #d25b46;
+}
+#nav a.active:hover{
+    color: #d25b46;
+}
+
+#user{
+    text-align: center;
+    margin-top: 40px;
+}
+
+#profile-pic{
+    margin-top: 50px;
+    padding: 0;
+    border-radius:100px;
+    width:200px;
+    height:200px;
+}
+
+#username{
+    margin: 10px;
+    padding: 0;
+    text-align: center;
+    overflow: hidden;
+    font-family: 'london';
+    font-size: 60px;
+}
+
+#invite-log-game{
+    margin-top: 40px;
+    padding: 0;
+    text-align: center;
+    overflow: hidden;
+    font-family: 'london';
+    font-size: 40px;
+}
+
+#invite-log-history{
+    margin-top: 40px;
+    padding: 0;
+    text-align: center;
+    overflow: hidden;
+    font-family: 'london';
+    font-size: 40px;
+}
