@@ -1,10 +1,5 @@
 'use strict';
 
-var idGame;
-var colorPlayer;
-var this_js_script = $('script[src*=main]');
-var userId = this_js_script.attr('data-my_var_1');;
-
 // Initializes ChessGame.
 function ChessGame() {
     
@@ -482,7 +477,6 @@ function checkDeplacement(pieceId, lastCase, newCase)
 function nameCaseToPosition(nameCase)
 {
     var pos = {};
-
     pos [0] = nameCase.charCodeAt(0) - 64;
     pos [1] = nameCase.charCodeAt(1) - 48;
 
