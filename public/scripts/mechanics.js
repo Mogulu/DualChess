@@ -260,9 +260,16 @@ function checkDeplacement(pieceId, lastCase, newCase)
             }
             else if(Math.abs(x) == 2 && Math.abs(y) == 0)
             {
+                var ref = firebase.database().ref('/games/'+idGame+'/piecesMove');
+                var listPieceMove;
+            
+                ref.once("value", function(snapshot) {
+                    listPieceMove = snapshot.val();
+                });
+
                 var data = {};
                 
-                if(pieceId.charAt(0) == "B" && lastCase == "E8" && listPieces["B_R1"] == "H8")
+                if(pieceId.charAt(0) == "B" && lastCase == "E8" && listPieces["B_R1"] == "H8" && listPieceMove["B_K"] == false && listPieceMove["B_R1"] == false)
                 {
                     if(pieceWhichAttackTheCase( nameCaseToPosition("F8"), pieceId.charAt(0), pieceId, newCase) == true ||
                        pieceWhichAttackTheCase( nameCaseToPosition("G8"), pieceId.charAt(0), pieceId, newCase) == true ||
@@ -271,7 +278,7 @@ function checkDeplacement(pieceId, lastCase, newCase)
                     else
                         data["B_R1"] = "F8";
                 }
-                else if (pieceId.charAt(0) == "B" && lastCase == "E8" && listPieces["B_R2"] == "A8")
+                else if (pieceId.charAt(0) == "B" && lastCase == "E8" && listPieces["B_R2"] == "A8" && listPieceMove["B_K"] == false && listPieceMove["B_R2"] == false)
                 {
                     if(pieceWhichAttackTheCase( nameCaseToPosition("D8"), pieceId.charAt(0), pieceId, newCase) == true ||
                        pieceWhichAttackTheCase( nameCaseToPosition("C8"), pieceId.charAt(0), pieceId, newCase) == true ||
@@ -280,7 +287,7 @@ function checkDeplacement(pieceId, lastCase, newCase)
                     else
                         data["B_R2"] = "D8";
                 }
-                else if (pieceId.charAt(0) == "W" && lastCase == "E1" && listPieces["W_R2"] == "H1")
+                else if (pieceId.charAt(0) == "W" && lastCase == "E1" && listPieces["W_R2"] == "H1" && listPieceMove["W_K"] == false && listPieceMove["W_R2"] == false)
                 {
                     if(pieceWhichAttackTheCase( nameCaseToPosition("E1"), pieceId.charAt(0), pieceId, newCase) == true ||
                        pieceWhichAttackTheCase( nameCaseToPosition("F1"), pieceId.charAt(0), pieceId, newCase) == true ||
@@ -289,7 +296,7 @@ function checkDeplacement(pieceId, lastCase, newCase)
                     else
                         data["W_R2"] = "F1";
                 }
-                else if (pieceId.charAt(0) == "W" && lastCase == "E1" && listPieces["W_R1"] == "A1")
+                else if (pieceId.charAt(0) == "W" && lastCase == "E1" && listPieces["W_R1"] == "A1" && listPieceMove["W_K"] == false && listPieceMove["W_R1"] == false)
                 {
                     if(pieceWhichAttackTheCase( nameCaseToPosition("E1"), pieceId.charAt(0), pieceId, newCase) == true ||
                        pieceWhichAttackTheCase( nameCaseToPosition("D1"), pieceId.charAt(0), pieceId, newCase) == true ||
