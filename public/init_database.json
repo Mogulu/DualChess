@@ -1,0 +1,179 @@
+{
+  "games" : {
+    "shW8RTDF7SxCYkLqmnWUYwL34XyG" : {
+      "colorPlayer" : "black",
+      "id_black" : "yfWWEGLPreacTBOVOogRa3SgV7P2",
+      "id_white" : "WG1Hev2hjyfKDDxmvIdT3Ksujza2",
+      "messages" : {
+        "BA5y0ebaJtD7yGFy26keieXsJHEr" : {
+          "expeditor" : "WG1Hev2hjyfKDDxmvIdT3Ksujza2",
+          "index" : "0",
+          "message" : "Haha j'ai encore les blancs"
+        },
+        "sKih98E0UvW5SMYvvpK8t32J7T4w" : {
+          "expeditor" : "yfWWEGLPreacTBOVOogRa3SgV7P2",
+          "index" : "1",
+          "message" : "Ballec j'vais t'éclater"
+        }
+      },
+      "pieces" : {
+        "B_B1" : "C8",
+        "B_B2" : "F8",
+        "B_K" : "E8",
+        "B_N1" : "B8",
+        "B_N2" : "G8",
+        "B_P1" : "A7",
+        "B_P2" : "B7",
+        "B_P3" : "C7",
+        "B_P4" : "D7",
+        "B_P5" : "E7",
+        "B_P6" : "F7",
+        "B_P7" : "G7",
+        "B_P8" : "H7",
+        "B_Q" : "D8",
+        "B_R1" : "H8",
+        "B_R2" : "A8",
+        "W_B1" : "F1",
+        "W_B2" : "C1",
+        "W_K" : "E1",
+        "W_N1" : "B1",
+        "W_N2" : "G1",
+        "W_P1" : "A2",
+        "W_P2" : "B2",
+        "W_P3" : "C2",
+        "W_P4" : "D2",
+        "W_P5" : "E2",
+        "W_P6" : "F2",
+        "W_P7" : "G2",
+        "W_P8" : "H2",
+        "W_Q" : "D1",
+        "W_R1" : "A1",
+        "W_R2" : "H1"
+      },
+      "piecesMove" : {
+        "B_K" : false,
+        "B_R1" : false,
+        "B_R2" : false,
+        "W_K" : false,
+        "W_R1" : false,
+        "W_R2" : false
+      },
+      "status" : "inGame",
+      "time1" : "inf",
+      "time2" : "inf",
+      "time_init" : "inf"
+    }
+  },
+  "messages" : {
+    "-Ktan_wu-fInMC2nxI0M" : {
+      "name" : "Guinet kévin",
+      "photoUrl" : "https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg",
+      "text" : "c'est dès que j'envoie un message ça rajoute des pièces ^^"
+    },
+    "-KtancYaFkuyiEjt2URZ" : {
+      "name" : "Rob Erref",
+      "photoUrl" : "https://lh5.googleusercontent.com/-tjmXwaakqVE/AAAAAAAAAAI/AAAAAAAAASU/5m2wimK-arI/photo.jpg",
+      "text" : "moi aussi mdr"
+    },
+    "-KtandIGEyBdmOzOQ7JY" : {
+      "name" : "Rob Erref",
+      "photoUrl" : "https://lh5.googleusercontent.com/-tjmXwaakqVE/AAAAAAAAAAI/AAAAAAAAASU/5m2wimK-arI/photo.jpg",
+      "text" : "c'est l'enfer"
+    },
+    "-KtaneR9oGOTk6kPOueG" : {
+      "name" : "Guinet kévin",
+      "photoUrl" : "https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg",
+      "text" : "oui"
+    },
+    "-Ktanebli5agA_8BVPWk" : {
+      "name" : "Rob Erref",
+      "photoUrl" : "https://lh5.googleusercontent.com/-tjmXwaakqVE/AAAAAAAAAAI/AAAAAAAAASU/5m2wimK-arI/photo.jpg",
+      "text" : "ha"
+    },
+    "-KtanepkOt9G6GZ38C48" : {
+      "name" : "Rob Erref",
+      "photoUrl" : "https://lh5.googleusercontent.com/-tjmXwaakqVE/AAAAAAAAAAI/AAAAAAAAASU/5m2wimK-arI/photo.jpg",
+      "text" : "haha"
+    },
+    "-Ktanew6oNgqhMl8cDCp" : {
+      "name" : "Rob Erref",
+      "photoUrl" : "https://lh5.googleusercontent.com/-tjmXwaakqVE/AAAAAAAAAAI/AAAAAAAAASU/5m2wimK-arI/photo.jpg",
+      "text" : "ha"
+    },
+    "-Ktanf2ZPaXTeYRO9DzL" : {
+      "name" : "Rob Erref",
+      "photoUrl" : "https://lh5.googleusercontent.com/-tjmXwaakqVE/AAAAAAAAAAI/AAAAAAAAASU/5m2wimK-arI/photo.jpg",
+      "text" : "ha"
+    },
+    "-Ktanf8qUZbpAN_vCRcU" : {
+      "name" : "Rob Erref",
+      "photoUrl" : "https://lh5.googleusercontent.com/-tjmXwaakqVE/AAAAAAAAAAI/AAAAAAAAASU/5m2wimK-arI/photo.jpg",
+      "text" : "ha"
+    },
+    "-Ktanja8BxbNUw2l_I3m" : {
+      "name" : "Rob Erref",
+      "photoUrl" : "https://lh5.googleusercontent.com/-tjmXwaakqVE/AAAAAAAAAAI/AAAAAAAAASU/5m2wimK-arI/photo.jpg",
+      "text" : "t'as du mettre l'init du board dans la fonction message"
+    },
+    "-KtanmDA6vjQU0cJZf8H" : {
+      "name" : "Rob Erref",
+      "photoUrl" : "https://lh5.googleusercontent.com/-tjmXwaakqVE/AAAAAAAAAAI/AAAAAAAAASU/5m2wimK-arI/photo.jpg",
+      "text" : "refresh et c'est bon"
+    },
+    "-KtanweKsinFdnwO7Uh2" : {
+      "name" : "Guinet kévin",
+      "photoUrl" : "https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg",
+      "text" : "oui j'ai vu je modifierai plus tard"
+    },
+    "-KtoxIqCB8fSMH4RLD_j" : {
+      "name" : "Guinet kévin",
+      "photoUrl" : "https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg",
+      "text" : "test"
+    },
+    "-KtoyEtIaO7C9ab36dM3" : {
+      "name" : "Guinet kévin",
+      "photoUrl" : "https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg",
+      "text" : "ufz"
+    },
+    "-KtoyRT-gSPz_9Ga5BFm" : {
+      "name" : "Guinet kévin",
+      "photoUrl" : "https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg",
+      "text" : "trd"
+    },
+    "-KtoyV7_xXwtgeysteIn" : {
+      "name" : "Guinet kévin",
+      "photoUrl" : "https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg",
+      "text" : "c'est bon il n'y a plus de dédoublement de pièce"
+    },
+    "-Ktp3zb9NUpVRh_bVOzb" : {
+      "name" : "Guinet kévin",
+      "photoUrl" : "https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg",
+      "text" : "2"
+    },
+    "-KxSBUFGQxYsaWR-laFv" : {
+      "name" : "Rob Erref",
+      "photoUrl" : "https://lh5.googleusercontent.com/-tjmXwaakqVE/AAAAAAAAAAI/AAAAAAAAASU/5m2wimK-arI/photo.jpg",
+      "text" : "tg"
+    }
+  },
+  "players" : {
+    "WG1Hev2hjyfKDDxmvIdT3Ksujza2" : {
+      "elo" : "1405",
+      "history" : [ {
+        "adv_id" : "yfWWEGLPreacTBOVOogRa3SgV7P2",
+        "result" : "W"
+      } ],
+      "nickname" : "Kevchess",
+      "status" : "inGame"
+    },
+    "yfWWEGLPreacTBOVOogRa3SgV7P2" : {
+      "elo" : "1395",
+      "history" : [ {
+        "adv_id" : "WG1Hev2hjyfKDDxmvIdT3Ksujza2",
+        "result" : "L"
+      } ],
+      "nickname" : "Mogulu",
+      "status" : "inGame"
+    }
+  }
+}
