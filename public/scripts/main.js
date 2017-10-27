@@ -1,5 +1,5 @@
 "use strict";
-
+var userId;
 // Initialize Firebase
 var config = {
     apiKey: "AIzaSyA_P-RNGkGLqqSzJvtf7mF-N3z8E4hAo8A",
@@ -27,7 +27,7 @@ function initFirebase() {
     //START authstatelistener
     firebase.auth().onAuthStateChanged(function(user){
         if(user){
-            // exclude some button and diplay
+            userId = user.uid;
 
             //USER PART show user data
             document.getElementById("user-data").style.visibility = "visible";
@@ -91,6 +91,5 @@ function signInOut() {
 // Launch function DualChess when the window is loaded
 window.onload = function() {
     window.dualChess = new DualChess();
-    window.alert("loaded");
 
 };

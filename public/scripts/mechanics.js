@@ -1,10 +1,5 @@
 'use strict';
 
-var idGame;
-var colorPlayer;
-var this_js_script = $('script[src*=main]');
-var userId = this_js_script.attr('data-my_var_1');;
-
 // Initializes ChessGame.
 function ChessGame() {
     
