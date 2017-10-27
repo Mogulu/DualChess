@@ -65,7 +65,6 @@ function initFirebase() {
 
             document.getElementById("span-login-button").textContent = "Log in";
             document.getElementById("sign-in-status").src = "../img/logout.png";
-            document.getElementById("account-details").textContent = null;
             document.getElementById("chessboard").style.display = "hidden";
 
         }
