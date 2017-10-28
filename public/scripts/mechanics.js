@@ -207,6 +207,9 @@ function checkDeplacement(pieceId, lastCase, newCase)
                         return false;
                     }
                 }
+                var data = {};
+                data[pieceId] = true;
+                firebase.database().ref('/games/'+idGame+'/piecesMove').update(data);
                 return true;
             }
             else
@@ -256,6 +259,9 @@ function checkDeplacement(pieceId, lastCase, newCase)
 
             if( Math.abs(x) <= 1 && Math.abs(y) <= 1)
             {
+                var data = {};
+                data[pieceId] = true;
+                firebase.database().ref('/games/'+idGame+'/piecesMove').update(data);
                 return true;
             }
             else if(Math.abs(x) == 2 && Math.abs(y) == 0)
@@ -268,6 +274,7 @@ function checkDeplacement(pieceId, lastCase, newCase)
                 });
 
                 var data = {};
+                var pieceMoveData = {};
                 
                 if(pieceId.charAt(0) == "B" && lastCase == "E8" && listPieces["B_R1"] == "H8" && listPieceMove["B_K"] == false && listPieceMove["B_R1"] == false)
                 {
@@ -276,7 +283,11 @@ function checkDeplacement(pieceId, lastCase, newCase)
                        pieceWhichAttackTheCase( nameCaseToPosition("E8"), pieceId.charAt(0), pieceId, newCase) == true)
                         return false;
                     else
+                    {
                         data["B_R1"] = "F8";
+                        pieceMoveData["B_K"] = true;
+                        pieceMoveData["B_R1"] = true;
+                    }
                 }
                 else if (pieceId.charAt(0) == "B" && lastCase == "E8" && listPieces["B_R2"] == "A8" && listPieceMove["B_K"] == false && listPieceMove["B_R2"] == false)
                 {
@@ -285,7 +296,11 @@ function checkDeplacement(pieceId, lastCase, newCase)
                        pieceWhichAttackTheCase( nameCaseToPosition("E8"), pieceId.charAt(0), pieceId, newCase) == true)
                         return false;
                     else
+                    {
                         data["B_R2"] = "D8";
+                        pieceMoveData["B_K"] = true;
+                        pieceMoveData["B_R2"] = true;
+                    }
                 }
                 else if (pieceId.charAt(0) == "W" && lastCase == "E1" && listPieces["W_R2"] == "H1" && listPieceMove["W_K"] == false && listPieceMove["W_R2"] == false)
                 {
@@ -294,7 +309,11 @@ function checkDeplacement(pieceId, lastCase, newCase)
                        pieceWhichAttackTheCase( nameCaseToPosition("G1"), pieceId.charAt(0), pieceId, newCase) == true)
                         return false;
                     else
+                    {
                         data["W_R2"] = "F1";
+                        pieceMoveData["W_K"] = true;
+                        pieceMoveData["W_R2"] = true;
+                    }
                 }
                 else if (pieceId.charAt(0) == "W" && lastCase == "E1" && listPieces["W_R1"] == "A1" && listPieceMove["W_K"] == false && listPieceMove["W_R1"] == false)
                 {
@@ -303,13 +322,18 @@ function checkDeplacement(pieceId, lastCase, newCase)
                        pieceWhichAttackTheCase( nameCaseToPosition("C1"), pieceId.charAt(0), pieceId, newCase) == true)
                         return false;
                     else
+                    {
                         data["W_R1"] = "D1";
+                        pieceMoveData["W_K"] = true;
+                        pieceMoveData["W_R1"] = true;
+                    }
                 }
                 else
                     return false;
                 
                 // update database
                 firebase.database().ref('/games/'+idGame+'/pieces').update(data);
+                firebase.database().ref('/games/'+idGame+'/piecesMove').update(pieceMoveData);
                 
                 return true;
             }
