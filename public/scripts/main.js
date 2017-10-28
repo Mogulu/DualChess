@@ -49,7 +49,7 @@ function initFirebase() {
 
 //            document.getElementById("accout-details").textContent = JSON.stringify(user, null, "  ");
 
-
+            initPlayer();
         } else{
             //If not auth
             //invite login
