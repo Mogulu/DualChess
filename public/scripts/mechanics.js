@@ -1186,17 +1186,18 @@ function checkStalemate(kingCase, colorPiece){
     var newKingPos = {};
     var newPos = {};
 
-    var flagBlackKnight = false;
-    var flagBlackBishop = false;
-    var flagWhiteKnight = false;
-    var flagWhiteBishop = false;
+    var flagBlackKnight = 0;
+    var flagBlackBishop = 0;
+    var flagWhiteKnight = 0;
+    var flagWhiteBishop = 0;
+    var flagOponnentPiece = 0;
     var nbPieceOut = 0;
 
     var listPieces = findPieces();
 
     // check if there is sufisally piece to checkmate
     for (var key in listPieces) {
-        if(key.charAt(0) == "B" && listPieces[key] != ""){
+        if(key.charAt(0) == colorPiece && listPieces[key] != ""){
             switch (key.charAt(2)) {
                 case "Q":
                 case "R":
@@ -1204,47 +1205,47 @@ function checkStalemate(kingCase, colorPiece){
                     return false;
                     break;
                 case "B":
-                    if(flagBlackBishop == true || flagBlackKnight == true)
+                    if(flagBlackBishop == 1 || flagBlackKnight == 1)
                         return false;
                     else
-                        flagBlackBishop == true;
+                        flagBlackBishop++;
                     break;
                 case "N":
-                    if(flagBlackBishop == true || flagBlackKnight == true)
+                    if(flagBlackBishop == 1 || flagBlackKnight == 1)
                         return false;
                     else
-                        flagBlackKnight == true;
+                        flagBlackKnight++;
                     break;
             }
         }
-        else if(key.charAt(0) == "W" && listPieces[key] != ""){
+        else if(key.charAt(0) == colorOpponent && listPieces[key] != ""){
             switch (key.charAt(2)) {
                 case "Q":
                 case "R":
                 case "P":
-                    return false;
+                    flagOponnentPiece++;
                     break;
                 case "B":
-                    if(flagWhiteBishop == true || flagWhiteKnight == true)
-                        return false;
-                    else
-                        flagWhiteBishop == true;
+                    flagWhiteBishop++;
                     break;
                 case "N":
-                    if(flagWhiteBishop == true || flagWhiteKnight == true)
-                        return false;
-                    else
-                        flagWhiteKnight == true;
+                    flagWhiteKnight++;
                     break;
             }
         }
-        else{
+        else if(listPieces[key] == ""){
             nbPieceOut++;
         }
     }
 
-    if(nbPieceOut >= 28)
+    // king against king
+    if(nbPieceOut == 30)
         return true;
+
+    // not sufisally piece to checkmate
+    if(flagBlackBishop + flagBlackKnight <= 2)
+        if(flagWhiteBishop + flagWhiteKnight <= 2 && flagOponnentPiece == 0)
+            return true;
 
     // check if the king is check, if is it's not a stalemate
     var kingPos = nameCaseToPosition(kingCase);
@@ -1252,6 +1253,7 @@ function checkStalemate(kingCase, colorPiece){
     if (pieceCheck)
         return false;
 
+    console.log("test");
     // if the king can move, it's not stalemate
     for (var i = -1; i <= 1; i++) {
         if (kingPos[0] + i > 0 && kingPos[0] + i < 9) {
