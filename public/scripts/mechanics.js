@@ -9,8 +9,6 @@ function ChessGame() {
     this.loadChessboard();
 }
 
-
-
 // Load the chessboard initial
 ChessGame.prototype.loadChessboard = function () {
 
@@ -22,6 +20,7 @@ ChessGame.prototype.loadChessboard = function () {
         idGame = Object.keys(snapshot.val())[0];
         colorPlayer = snapshot.val()[idGame]['colorPlayer'];
 
+        // Find all pieces
         var listPieces = findPieces();
         // remove all pieces
         for (var key in listPieces) {
@@ -29,25 +28,33 @@ ChessGame.prototype.loadChessboard = function () {
             $("#" + key).remove();
         }
 
-        // place pieces
+        // place pieces one by one
         for (var piece in listPieces) {
+            // if piece have a case
             if (listPieces[piece] != "") {
+                // add image of the piece
                 $('<img src="../img/pieces/' + piece + '.png" id="' + piece + '" style="z-index: 1; margin-top:-29%; height: 100%; width: 100%; ">').appendTo('#' + listPieces[piece]).draggable({
                     containment: '#content',
                     revert: true
                 });
 
+                // if we have black
                 if (userId == snapshot.val()[idGame]['id_black']) {
+                    // if white to move
                     if (colorPlayer == 'white') {
+                        // make all pieces not draggable
                         $("#" + piece).draggable('disable');
                     }
+                    // else if black to move
                     else if (colorPlayer == 'black') {
+                        // make white pieces not draggable and black pieces draggable
                         if (piece.charAt(0) == "W")
                             $("#" + piece).draggable('disable');
                         else
                             $("#" + piece).draggable('unable');
                     }
                 }
+                // else if we have white make the same thing
                 else if (userId == snapshot.val()[idGame]['id_white']) {
                     if (colorPlayer == 'black') {
                         $("#" + piece).draggable('disable');
@@ -75,10 +82,13 @@ ChessGame.prototype.loadChessboard = function () {
 
 };
 
+// Function which return the list of pieces and their position
 function findPieces() {
+    // database connexion
     var ref = firebase.database().ref('/games/' + idGame + '/pieces');
     var list;
 
+    // get data
     ref.once("value", function (snapshot) {
         list = snapshot.val();
     });
@@ -86,25 +96,28 @@ function findPieces() {
     return list;
 }
 
+// Function call when a piece is drop
 function pieceDrop(event, ui) {
-    var ref = firebase.database().ref('/games/' + idGame + '/pieces');
+
     var newCase = $(this)[0].id;
     var pieceId = ui.draggable[0].id;
-    var lastCase;
-    var listPieces;
 
-    ref.once("value", function (snapshot) {
-        lastCase = snapshot.val()[pieceId];
-    });
+    var colorPiece = pieceId.charAt(0);
+    var colorOponnent;
+    if(colorPiece == "W")
+        colorOponnent = "B";
+    else
+        colorOponnent = "W";
 
+    var listPieces = findPieces();
+    var lastCase = listPieces[pieceId];
+
+    var data = {};
+
+    // if the piece move
     if (lastCase != newCase) {
-        listPieces = findPieces();
 
-        //check if is checkmat
-        var flag = checkCheckMat(listPieces[pieceId.charAt(0) + "_K"], pieceId.charAt(0));
-        if (flag == true)
-            return;
-
+        // check if the movement is possible 
         var flagMoveOK = checkDeplacement(pieceId, lastCase, newCase);
         if (flagMoveOK == false)
             return;
@@ -112,22 +125,23 @@ function pieceDrop(event, ui) {
         // get pieces position back
         for (var key in listPieces) {
             if (listPieces[key] == newCase) {
-                // remove the case and add its name
+                // remove the piece
                 $("#" + key).remove();
 
-                var data = {};
+                data = {};
                 data[key] = "";
+                // update database
                 firebase.database().ref('/games/' + idGame + '/pieces').update(data);
             }
         }
 
-        // remove the case and add its name
-        $("#" + pieceId).remove();
-
-        var data = {};
+        data = {};
+        // if pawn is promot
         if (flagMoveOK == "promot") {
+            // add a queen
             data[pieceId.charAt(0) + "_Q" + nbQueen] = newCase;
             nbQueen++;
+            // remove the piece
             data[pieceId] = "";
         }
         else
@@ -137,47 +151,66 @@ function pieceDrop(event, ui) {
         firebase.database().ref('/games/' + idGame + '/pieces').update(data);
 
         data = {};
+        // update color player
         if (colorPlayer == "white")
             data['colorPlayer'] = "black";
         else
             data['colorPlayer'] = "white";
 
         firebase.database().ref('/games/' + idGame).update(data);
+
+        //check if is checkmat (PLACE THIS IN OTHER PLACE)
+        var flag = checkCheckMat(listPieces[ colorOponnent + "_K"], colorOponnent);
+        if (flag == true)
+            return;
+        else
+            console.log("Not checkmate");
     }
 
     ui.draggable.position({ of: $(this), my: 'left top', at: 'left top' });
     ui.draggable.draggable('option', 'revert', false);
 }
 
+// Check if movement is possible
 function checkDeplacement(pieceId, lastCase, newCase) {
     var lastPos = nameCaseToPosition(lastCase);
     var newPos = nameCaseToPosition(newCase);
 
     var listPieces = findPieces();
+
+    // check if piece don't eat a piece which has the same color
     for (var key in listPieces) {
         if (listPieces[key] == newCase && key.charAt(0) == pieceId.charAt(0)) {
             return false;
         }
     }
 
+    // if the piece is not the king
     if (pieceId.charAt(2) != "K") {
+        // check if the king is not check after the movement
         if (pieceWhichAttackTheCase(nameCaseToPosition(listPieces[pieceId.charAt(0) + "_K"]), pieceId.charAt(0), pieceId, newCase) != false) {
             return false;
         }
     }
+    // else (the king move)
     else {
+        // check if the king is not check after his movement
         if (pieceWhichAttackTheCase(newPos, pieceId.charAt(0), pieceId, newCase) != false) {
             return false;
         }
     }
 
+    // rules to move
     switch (pieceId.charAt(2)) {
+
+        // if it's a rook
         case "R":
+            // if it moves vertically or horizontally
             if (lastPos[0] == newPos[0] || lastPos[1] == newPos[1]) {
                 // check if a piece is between lastPos and newPos
                 for (var key in listPieces) {
                     var pos = nameCaseToPosition(listPieces[key])
-                    // if a piece is between lastPos and newPos
+                    // if a piece is between lastPos and newPos (not possible to move)
                     if (((pos[1] < newPos[1] && pos[1] > lastPos[1]) ||
                         (pos[1] > newPos[1] && pos[1] < lastPos[1]) ||
                         (pos[0] < newPos[0] && pos[0] > lastPos[0]) ||
@@ -186,33 +219,41 @@ function checkDeplacement(pieceId, lastCase, newCase) {
                     }
                 }
                 
+                // update pieceMove
                 var data = {};
                 data[pieceId] = true;
                 firebase.database().ref('/games/' + idGame + '/piecesMove').update(data);
                 return true;
             }
+            // not possible
             else
                 return false;
             break;
+
+        // if it's knight
         case "N":
             var x = (lastPos[0] - newPos[0]);
             var y = (lastPos[1] - newPos[1]);
 
+            // if it move like an "L"
             if ((Math.abs(x) == 1 && Math.abs(y) == 2) || (Math.abs(x) == 2 && Math.abs(y) == 1)) {
                 return true;
             }
             else
                 return false;
             break;
+
+        // if it's a bishop
         case "B":
             var x = (lastPos[0] - newPos[0]);
             var y = (lastPos[1] - newPos[1]);
 
+            // if it move diagonally
             if (Math.abs(x) == Math.abs(y)) {
                 // check if a piece is between lastPos and newPos
                 for (var key in listPieces) {
                     var pos = nameCaseToPosition(listPieces[key])
-                    // if a piece is between lastPos and newPos
+                    // if a piece is between lastPos and newPos (not possible to move)
                     if (((pos[1] < newPos[1] && pos[1] > lastPos[1]) ||
                         (pos[1] > newPos[1] && pos[1] < lastPos[1]) ||
                         (pos[0] < newPos[0] && pos[0] > lastPos[0]) ||
@@ -225,23 +266,28 @@ function checkDeplacement(pieceId, lastCase, newCase) {
                 }
                 return true;
             }
+            // else impossible to move
             else
                 return false;
             break;
+
+        // if it's a king
         case "K":
             var x = (lastPos[0] - newPos[0]);
             var y = (lastPos[1] - newPos[1]);
 
+            // if king go one case around him (move possible)
             if (Math.abs(x) <= 1 && Math.abs(y) <= 1) {
                 var data = {};
                 data[pieceId] = true;
                 firebase.database().ref('/games/' + idGame + '/piecesMove').update(data);
                 return true;
             }
+            // if it's rock
             else if (Math.abs(x) == 2 && Math.abs(y) == 0) {
+                // get piece which have already move
                 var ref = firebase.database().ref('/games/' + idGame + '/piecesMove');
                 var listPieceMove;
-
                 ref.once("value", function (snapshot) {
                     listPieceMove = snapshot.val();
                 });
@@ -249,26 +295,28 @@ function checkDeplacement(pieceId, lastCase, newCase) {
                 var data = {};
                 var pieceMoveData = {};
 
-                if (pieceId.charAt(0) == "B" && lastCase == "E8" && listPieces["B_R1"] == "H8" && listPieceMove["B_K"] == false && listPieceMove["B_R1"] == false) {
+                // check the four check possible (small and big rock for black and white)
+                // if king and the rook have'nt move and check if the king don't pass in a case which is check
+                if (pieceId.charAt(0) == "B" && lastCase == "E8" && listPieces["B_R2"] == "H8" && listPieceMove["B_K"] == false && listPieceMove["B_R2"] == false) {
                     if (pieceWhichAttackTheCase(nameCaseToPosition("F8"), pieceId.charAt(0), pieceId, newCase) != false ||
                         pieceWhichAttackTheCase(nameCaseToPosition("G8"), pieceId.charAt(0), pieceId, newCase) != false ||
                         pieceWhichAttackTheCase(nameCaseToPosition("E8"), pieceId.charAt(0), pieceId, newCase) != false)
                         return false;
                     else {
-                        data["B_R1"] = "F8";
+                        data["B_R2"] = "F8";
                         pieceMoveData["B_K"] = true;
-                        pieceMoveData["B_R1"] = true;
+                        pieceMoveData["B_R2"] = true;
                     }
                 }
-                else if (pieceId.charAt(0) == "B" && lastCase == "E8" && listPieces["B_R2"] == "A8" && listPieceMove["B_K"] == false && listPieceMove["B_R2"] == false) {
+                else if (pieceId.charAt(0) == "B" && lastCase == "E8" && listPieces["B_R1"] == "A8" && listPieceMove["B_K"] == false && listPieceMove["B_R1"] == false) {
                     if (pieceWhichAttackTheCase(nameCaseToPosition("D8"), pieceId.charAt(0), pieceId, newCase) != false ||
                         pieceWhichAttackTheCase(nameCaseToPosition("C8"), pieceId.charAt(0), pieceId, newCase) != false ||
                         pieceWhichAttackTheCase(nameCaseToPosition("E8"), pieceId.charAt(0), pieceId, newCase) != false)
                         return false;
                     else {
-                        data["B_R2"] = "D8";
+                        data["B_R1"] = "D8";
                         pieceMoveData["B_K"] = true;
-                        pieceMoveData["B_R2"] = true;
+                        pieceMoveData["B_R1"] = true;
                     }
                 }
                 else if (pieceId.charAt(0) == "W" && lastCase == "E1" && listPieces["W_R2"] == "H1" && listPieceMove["W_K"] == false && listPieceMove["W_R2"] == false) {
@@ -305,10 +353,13 @@ function checkDeplacement(pieceId, lastCase, newCase) {
             else
                 return false;
             break;
+
+        // if it's a queen
         case "Q":
             var x = (lastPos[0] - newPos[0]);
             var y = (lastPos[1] - newPos[1]);
 
+            // if queen move like a rook
             if (lastPos[0] == newPos[0] || lastPos[1] == newPos[1]) {
                 // check if a piece is between lastPos and newPos
                 for (var key in listPieces) {
@@ -323,6 +374,7 @@ function checkDeplacement(pieceId, lastCase, newCase) {
                 }
                 return true;
             }
+            // else if it move like a bishop
             else if (Math.abs(x) == Math.abs(y)) {
                 // check if a piece is between lastPos and newPos
                 for (var key in listPieces) {
@@ -343,44 +395,48 @@ function checkDeplacement(pieceId, lastCase, newCase) {
             else
                 return false;
             break;
+        
+        // if it's a pawn
         case "P":
             var color = pieceId.charAt(0);
             var x = newPos[0] - lastPos[0];
             var y = newPos[1] - lastPos[1];
 
+            // if it's black pawn
             if (color == "B" && y >= -2 && y < 0) {
+                // if the pawn advance to two case and it is in his initial position
                 if (y == -2 && lastCase[1] == 7) {
-                    // check if a piece is between lastPos and newPos
+                    // check if a piece is not between or in the newPos
                     for (var key in listPieces) {
                         var pos = nameCaseToPosition(listPieces[key])
-                        // if a piece is between lastPos and newPos
                         if (pos[0] == newPos[0] && pos[1] == newPos[1] + 1) {
                             return false;
                         }
                     }
                     return true;
                 }
+                // else if the pawn advance to one case
                 else if (y == -1 && x == 0) {
-                    // check if a piece is between lastPos and newPos
+                    // check if a piece is in the newPos
                     for (var key in listPieces) {
                         var pos = nameCaseToPosition(listPieces[key])
-                        // if a piece is between lastPos and newPos
                         if (pos[0] == newPos[0] && pos[1] == newPos[1]) {
                             return false;
                         }
                     }
-
+                    // if it's a promotion
                     if (newPos[1] == 1)
                         return "promot";
 
                     return true;
                 }
+                // else if the pawn eat another piece
                 else if (y == -1 && (x == -1 || x == 1)) {
-                    // check if a piece is between lastPos and newPos
+                    // check if ther is a piece in the newPos
                     for (var key in listPieces) {
                         var pos = nameCaseToPosition(listPieces[key])
-                        // if a piece is between lastPos and newPos
                         if (pos[0] == newPos[0] && pos[1] == newPos[1]) {
+                            // if it's promot
                             if (newPos[1] == 1)
                                 return "promot";
                             return true;
@@ -391,12 +447,11 @@ function checkDeplacement(pieceId, lastCase, newCase) {
                 else
                     return false;
             }
+            // else if a white pawn, same thing but inversed
             else if (color == "W" && y <= 2 && y > 0) {
                 if (y == 2 && lastCase[1] == 2) {
-                    // check if a piece is between lastPos and newPos
                     for (var key in listPieces) {
                         var pos = nameCaseToPosition(listPieces[key])
-                        // if a piece is between lastPos and newPos
                         if (pos[0] == newPos[0] && pos[1] == newPos[1] - 1) {
                             return false;
                         }
@@ -404,10 +459,8 @@ function checkDeplacement(pieceId, lastCase, newCase) {
                     return true;
                 }
                 else if (y == 1 && x == 0) {
-                    // check if a piece is between lastPos and newPos
                     for (var key in listPieces) {
                         var pos = nameCaseToPosition(listPieces[key])
-                        // if a piece is between lastPos and newPos
                         if (pos[0] == newPos[0] && pos[1] == newPos[1]) {
                             return false;
                         }
@@ -419,10 +472,8 @@ function checkDeplacement(pieceId, lastCase, newCase) {
                     return true;
                 }
                 else if (y == 1 && (x == -1 || x == 1)) {
-                    // check if a piece is between lastPos and newPos
                     for (var key in listPieces) {
                         var pos = nameCaseToPosition(listPieces[key])
-                        // if a piece is between lastPos and newPos
                         if (pos[0] == newPos[0] && pos[1] == newPos[1]) {
                             if (newPos[1] == 8)
                                 return "promot";
@@ -444,6 +495,7 @@ function checkDeplacement(pieceId, lastCase, newCase) {
     return true;
 }
 
+// Transform a name case to a postion (B3 -> {2;3})
 function nameCaseToPosition(nameCase) {
     var pos = {};
     pos[0] = nameCase.charCodeAt(0) - 64;
@@ -452,28 +504,37 @@ function nameCaseToPosition(nameCase) {
     return pos;
 }
 
+// Transform a position to a name of his case ({2;3} -> B3)
 function namePositionToCase(Pos) {
     return String.fromCharCode(Pos[0] + 64) + Pos[1];
 }
 
+// Check if a case is attacked or not (use to see if it's possible to move a piece in this case)
 function pieceWhichAttackTheCase(casePos, colorPiece, newPiece = "", newPos = "", pieceEsclusion = "") {
     var listPieces = findPieces();
+    // if a piece is moved
     if (newPiece != "") {
+        // change virtually the position
         listPieces[newPiece] = newPos;
     }
 
-    var flagEchecs = 1;
+    var flagEchecs = true;
 
+    // for all pieces we will check if it attack the case
     for (var key1 in listPieces) {
+
+        // if the piece is eat
         if (newPos == listPieces[key1] && newPiece != key1) {
             listPieces[key1] = "";
         }
 
         switch (key1.charAt(2)) {
+            // if it's a rook
             case "R":
-                flagEchecs = 1;
+                flagEchecs = true;
                 var posPieceEchecs = nameCaseToPosition(listPieces[key1]);
 
+                // check if the rook is in the same line or column and it's the adverse color
                 if ((casePos[0] == posPieceEchecs[0] || casePos[1] == posPieceEchecs[1]) && colorPiece != key1.charAt(0)) {
                     // check if a piece is between lastPos and newPos
                     for (var key2 in listPieces) {
@@ -485,37 +546,41 @@ function pieceWhichAttackTheCase(casePos, colorPiece, newPiece = "", newPos = ""
                             (posPieceBetween[0] > posPieceEchecs[0] && posPieceBetween[0] < casePos[0])) &&
                             (posPieceBetween[0] == posPieceEchecs[0] ||
                                 posPieceBetween[1] == posPieceEchecs[1])) {
-                            flagEchecs = 0;
+                            flagEchecs = false;
                         }
                     }
-
-                    if (flagEchecs == 1) {
+                    // if check return the piece which make check
+                    if (flagEchecs == true) {
                         console.log("ECHECS");
                         return key1;
                     }
                 }
                 break;
+            
+            // if it's a knight
             case "N":
                 var posPieceEchecs = nameCaseToPosition(listPieces[key1]);
 
                 var x = (casePos[0] - posPieceEchecs[0]);
                 var y = (casePos[1] - posPieceEchecs[1]);
 
+                // if the knight attack the case return the pieceId
                 if (((Math.abs(x) == 1 && Math.abs(y) == 2) || (Math.abs(x) == 2 && Math.abs(y) == 1)) && colorPiece != key1.charAt(0)) {
                     console.log("ECHECS");
                     return key1;
                 }
-
                 break;
+
+            // if it's a bishop
             case "B":
-                flagEchecs = 1;
+                flagEchecs = true;
                 var posPieceEchecs = nameCaseToPosition(listPieces[key1]);
 
                 var x = (casePos[0] - posPieceEchecs[0]);
                 var y = (casePos[1] - posPieceEchecs[1]);
 
+                // if the bishop attack the case
                 if (Math.abs(x) == Math.abs(y) && colorPiece != key1.charAt(0)) {
-
                     // check if a piece is between lastPos and listPieces
                     for (var key2 in listPieces) {
                         var posPieceBetween = nameCaseToPosition(listPieces[key2]);
@@ -527,17 +592,21 @@ function pieceWhichAttackTheCase(casePos, colorPiece, newPiece = "", newPos = ""
                             && ((Math.abs(posPieceBetween[0] - posPieceEchecs[0]) == Math.abs(posPieceBetween[1] - posPieceEchecs[1]))
                                 && (Math.abs(posPieceBetween[0] - casePos[0]) == Math.abs(posPieceBetween[1] - casePos[1])))
                         ) {
-                            flagEchecs = 0;
+                            flagEchecs = false;
                         }
                     }
 
-                    if (flagEchecs == 1) {
+                    // if the bishop attack the case return his id
+                    if (flagEchecs == true) {
                         console.log("ECHECS");
                         return key1;
                     }
                 }
                 break;
+            
+            // if it's a king
             case "K":
+                // if he is exclude pass to an other piece (use if the king can't eat a piece)
                 if (pieceEsclusion == key1)
                     break;
 
@@ -546,17 +615,21 @@ function pieceWhichAttackTheCase(casePos, colorPiece, newPiece = "", newPos = ""
                 var x = (casePos[0] - posPieceEchecs[0]);
                 var y = (casePos[1] - posPieceEchecs[1]);
 
+                // check if it can move
                 if (Math.abs(x) <= 1 && Math.abs(y) <= 1 && colorPiece != key1.charAt(0)) {
                     console.log("ECHECS");
                     return key1;
                 }
                 break;
+
+            // if it's a queen
             case "Q":
-                flagEchecs = 1;
+                flagEchecs = true;
                 var posPieceEchecs = nameCaseToPosition(listPieces[key1]);
                 var x = (casePos[0] - posPieceEchecs[0]);
                 var y = (casePos[1] - posPieceEchecs[1]);
 
+                // check if it can attack moving like rook
                 if ((casePos[0] == posPieceEchecs[0] || casePos[1] == posPieceEchecs[1]) && colorPiece != key1.charAt(0)) {
                     // check if a piece is between lastPos and newPos
                     for (var key2 in listPieces) {
@@ -568,15 +641,16 @@ function pieceWhichAttackTheCase(casePos, colorPiece, newPiece = "", newPos = ""
                             (posPieceBetween[0] > posPieceEchecs[0] && posPieceBetween[0] < casePos[0])) &&
                             (posPieceBetween[0] == posPieceEchecs[0] ||
                                 posPieceBetween[1] == posPieceEchecs[1])) {
-                            flagEchecs = 0;
+                            flagEchecs = false;
                         }
                     }
 
-                    if (flagEchecs == 1) {
+                    if (flagEchecs == true) {
                         console.log("ECHECS");
                         return key1;
                     }
                 }
+                // check if it can attack like bishop
                 else if (Math.abs(x) == Math.abs(y) && colorPiece != key1.charAt(0)) {
                     // check if a piece is between lastPos and listPieces
                     for (var key2 in listPieces) {
@@ -589,22 +663,25 @@ function pieceWhichAttackTheCase(casePos, colorPiece, newPiece = "", newPos = ""
                             && ((Math.abs(posPieceBetween[0] - posPieceEchecs[0]) == Math.abs(posPieceBetween[1] - posPieceEchecs[1]))
                                 && (Math.abs(posPieceBetween[0] - casePos[0]) == Math.abs(posPieceBetween[1] - casePos[1])))
                         ) {
-                            flagEchecs = 0;
+                            flagEchecs = false;
                         }
                     }
 
-                    if (flagEchecs == 1) {
+                    if (flagEchecs == true) {
                         console.log("ECHECS");
                         return key1;
                     }
                 }
                 break;
+
+            // if it's a pawn
             case "P":
                 var posPieceEchecs = nameCaseToPosition(listPieces[key1]);
 
                 var x = (casePos[0] - posPieceEchecs[0]);
                 var y = (casePos[1] - posPieceEchecs[1]);
 
+                // check if it can eat
                 if (colorPiece != key1.charAt(0) && (x == 1 || x == -1) && (y == 1 || y == -1)) {
                     console.log("ECHECS");
                     return key1;
@@ -615,6 +692,7 @@ function pieceWhichAttackTheCase(casePos, colorPiece, newPiece = "", newPos = ""
     return false;
 }
 
+// Check if the king is checkmat
 function checkCheckMat(kingCase, colorPiece) {
     var colorOpponent;
     if (colorPiece == "B")
@@ -623,12 +701,14 @@ function checkCheckMat(kingCase, colorPiece) {
         colorOpponent = "B";
 
     var newKingPos = {};
+
+    // check if the king is check, if is not it's not a checkmate
     var kingPos = nameCaseToPosition(kingCase);
     var pieceCheck = pieceWhichAttackTheCase(kingPos, colorPiece);
-
     if (!pieceCheck)
         return false;
 
+    // if the king can move, it's not checkmate
     for (var i = -1; i <= 1; i++) {
         if (kingPos[0] + i > 0 && kingPos[0] + i < 9) {
             for (var j = -1; j <= 1; j++) {
@@ -647,22 +727,28 @@ function checkCheckMat(kingCase, colorPiece) {
 
     var listPieces = findPieces();
 
+    // check if we can make a piece between the king and the opponent piece
     switch (pieceCheck.charAt(2)) {
+        // if the opponent is a rook
         case "R":
             var posPieceCheck = nameCaseToPosition(listPieces[pieceCheck]);
 
+            // if the rook is placed in the same column and a line < than the king
             if (posPieceCheck[0] == kingPos[0]) {
                 if (posPieceCheck[1] < kingPos[1]) {
+                    // check if we can place a piece between
                     for (var i = posPieceCheck[1]; i < kingPos[1]; i++) {
                         var casePos = {};
                         casePos[0] = posPieceCheck[0];
                         casePos[1] = i;
                         var pieceCanGo = pieceWhichAttackTheCase(casePos, colorOpponent);
+                        // if a piece can go check if it can move
                         if (pieceCanGo != false) {
                             var flag = checkDeplacement(pieceCanGo, listPieces[pieceCanGo], namePositionToCase(casePos));
                             if (flag != false) {
                                 return false;
                             }
+                            // else if it can't and it's the king, double check without the king
                             else if (flag == false && pieceCanGo == colorPiece + "_K") {
                                 pieceCanGo = pieceWhichAttackTheCase(casePos, colorOpponent, "", "", colorPiece + "_K");
                                 if (pieceCanGo != false) {
@@ -675,6 +761,7 @@ function checkCheckMat(kingCase, colorPiece) {
                         }
                     }
                 }
+                // same thing but with the rook in another place
                 else {
                     for (var i = kingPos[1]; i < posPieceCheck[1]; i++) {
                         var casePos = {};
@@ -698,6 +785,7 @@ function checkCheckMat(kingCase, colorPiece) {
                     }
                 }
             }
+            // same thing but with the rook in another place
             else if (posPieceCheck[1] == kingPos[1]) {
                 if (posPieceCheck[0] < kingPos[0]) {
                     for (var i = posPieceCheck[0]; i < kingPos[0]; i++) {
@@ -721,6 +809,7 @@ function checkCheckMat(kingCase, colorPiece) {
                         }
                     }
                 }
+                // same thing but with the rook in another place
                 else {
                     for (var i = kingPos[0]; i < posPieceCheck[0]; i++) {
                         var casePos = {};
@@ -746,6 +835,8 @@ function checkCheckMat(kingCase, colorPiece) {
             }
 
             break;
+
+        // if it's a pawn or a knight check if we can it them
         case "N":
         case "P":
             var casePos = nameCaseToPosition(listPieces[pieceCheck]);
@@ -765,11 +856,14 @@ function checkCheckMat(kingCase, colorPiece) {
             }
 
             break;
+
+        // if it's a bishop check we can eat them or place a piece between
         case "B":
             var posPieceCheck = nameCaseToPosition(listPieces[pieceCheck]);
 
             var j = 0;
 
+            // same thing that the rook but with a bishop
             if (posPieceCheck[0] < kingPos[0]) {
                 if (posPieceCheck[1] < kingPos[1]) {
                     for (var i = posPieceCheck[1]; i < kingPos[1]; i++) {
@@ -868,6 +962,8 @@ function checkCheckMat(kingCase, colorPiece) {
             }
 
             break;
+
+        // if it's queen, same thing that the rook and the bishop
         case "Q":
             var posPieceCheck = nameCaseToPosition(listPieces[pieceCheck]);
 
@@ -1064,6 +1160,6 @@ function checkCheckMat(kingCase, colorPiece) {
             break;
     }
 
-    console.log("Echecs et mat!");
+    console.log("Checkmate !!!");
     return true;
 }
