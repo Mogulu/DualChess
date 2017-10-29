@@ -67,7 +67,7 @@ function initFirebase() {
 
             document.getElementById("span-login-button").textContent = "Log in";
             document.getElementById("sign-in-status").src = "../img/logout.png";
-            document.getElementById("chessboard").style.display = "hidden";
+            document.getElementById("chessboard").style.visibility = "visible";
 
         }
         document.getElementById("login-button").disabled = false;
@@ -117,12 +117,23 @@ function initPlayer(){
 
 function goToLoby(){
 
-    document.getElementById("chessboard").removeAttribute('hidden');
+    
     //check if already in loby
     var ref = firebase.database().ref('/loby');
     ref.once("value",function(snapshot) {
         if (snapshot.hasChild(userId)) {
             console.log("already In Loby");
+            snapshot.child(userId).ref.remove();
+            console.log("removed In Loby");
+            document.getElementById("loby-button").textContent = "Search Game";
+            document.getElementById("spinner_loby").style.display = "none";
+            
+            var data_players = {};
+            data_players["status"] = "menu";
+            firebase.database().ref('/players/'+userId).update(data_players);
+            console.log("in loby");
+
+
         }
         else{
             // update database
@@ -131,12 +142,20 @@ function goToLoby(){
                 elo = snapshot.val();
                 console.log(elo);
             });
- 
-            var data = {};
-            data["elo"] = elo;
-            data["status"] = "waiting";   
-            firebase.database().ref('/loby/'+userId).update(data);
+
+            var data_loby = {};
+            data_loby["elo"] = elo;
+            data_loby["status"] = "waiting";   
+            firebase.database().ref('/loby/'+userId).update(data_loby);
+
+            var data_players = {};
+            data_players["status"] = "loby";
+            firebase.database().ref('/players/'+userId).update(data_players);
             console.log("in loby");
+            
+            //cancel button
+            document.getElementById("loby-button").textContent = "Cancel Search";
+            document.getElementById("spinner_loby").style.display = "block";
         }
     });
 

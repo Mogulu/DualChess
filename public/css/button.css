@@ -43,3 +43,23 @@
     opacity: 1;
     right: 0;
 }
+
+.btn {
+  border-radius: 10px;
+    background-color: #333;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 28px;
+    padding: 20px;
+    width: 250px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+    font-family: 'london';
+}
+
+.btn:hover {
+  background: #3cb0fd;
+  text-decoration: none;
+}

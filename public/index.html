@@ -4,6 +4,8 @@
         <title>DualChess</title>
         <link rel="stylesheet" href="css/styles.css">
         <link rel="stylesheet" href="css/button.css">
+        <link rel="stylesheet" href="css/spinner.css">
+
 
         <!-- DEP jQuery AND AJAX -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -31,7 +33,7 @@
 
 
             <div class="view" id="user">
-                <button class="noselect" id="login-button"><span id="span-login-button">Log In </span></button>
+                <button class="noselect" id="login-button"  ><span id="span-login-button">Log In </span></button>
                 <div id="user-data">
                     <img id="profile-pic"/>
                     <p id="username"></p>
@@ -43,9 +45,15 @@
             <div class="view hide" id="game">
                 <p id="invite-log-game">Please, go to User tab to login.</p>
 
-                <button class="noselect" id="loby-button" id="login-button"><span id="span-login-button">Search game </span></button>
+                <button class="btn" id="loby-button">Search Game</button>
 
-                <div hidden id="chessboard" style="position: absolute; padding: 50px; width: 66%;"> </div>
+                <div style="display:none" class="spinner" id="spinner_loby">
+                    <div class="bounce1"></div>
+                    <div class="bounce2"></div>
+                    <div class="bounce3"></div>
+                </div>
+
+                <div id="chessboard" style="visibility:visible; position: absolute; padding: 50px; width: 66%;"> </div>
 
             </div>
 
