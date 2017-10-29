@@ -101,9 +101,8 @@ function inMenu(){
     document.getElementById("loby-button").textContent = "Cancel Search";
     document.getElementById("spinner_loby").style.display = "block";
     document.getElementById("chessboard").style.visibility = "hidden"
-
-
-
+        document.getElementById("loby-button").style.display = "block";
+    document.getElementById("game-button").style.display = "none";
 
 }
 
@@ -257,10 +256,12 @@ function Game(){
 }
 
 function Cancel(){
+
+    
     inMenu();
     var ref = firebase.database().ref('/players/'+userId);
     ref.once("value",function(snapshot) {
-        var loose = snapshot.child("loose") ;
+        var loose = snapshot.child("loose").val() ;
         var data = {};
         data["status"] = "menu"; 
         data["loose"] = loose + 1;       
