@@ -1,10 +1,7 @@
 "use strict";
 var userId;
-<<<<<<< HEAD
 var userName;
-=======
 var nbQueen = 1;
->>>>>>> 8fde8cb36c1e45434e7af62fb1ea0bb711387167
 // Initialize Firebase
 var config = {
     apiKey: "AIzaSyA_P-RNGkGLqqSzJvtf7mF-N3z8E4hAo8A",
@@ -134,7 +131,7 @@ function goToLoby(){
                 elo = snapshot.val();
                 console.log(elo);
             });
-
+ 
             var data = {};
             data["elo"] = elo;
             data["status"] = "waiting";   
