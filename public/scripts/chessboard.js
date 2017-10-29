@@ -8,6 +8,13 @@ function init() {
     // Reset the game
     $('#chessboard').html( '' );
 
+    var widthWindow = $(window).width();
+    var widthChessboard;
+    if ($('#chessboard').width() != 50)
+        widthChessboard= $('#chessboard').width() * 0.66;
+    else
+        widthChessboard= ($('#chessboard').width() * 0.66 / 100) * widthWindow;
+
     // Create the chess board
     for ( var i=1; i<=64; i++ ) {
 
@@ -69,39 +76,67 @@ function init() {
                 chiffre = "1";
                 break;
         }
-
+        
         if(Math.floor( (i-1)/8) % 2 == 0)
         {
             if(i%2 == 0)
             {
-                $('<div id="'+ lettre + chiffre +'" style="font-size: 75%; color: white; background-color: black; position: absolute; height: 70%; width: 6%; margin-left:'+ (6*((i-1)%8)) +'%;margin-top:'+ (6 * Math.floor( (i-1)/8) ) +'%;">' + lettre + chiffre + '</div>').appendTo( '#chessboard' ).droppable( {
+                $('<div id="'+ lettre + chiffre +'" class=\'blackCase\' ">' + lettre + chiffre + '</div>').appendTo( '#chessboard' ).droppable( {
                     hoverClass: 'hovered',
                     drop: pieceDrop
                 } );
+                var height = widthChessboard / 8;
+                var marginleft = height * ((i-1)%8);
+                var margintop = height * Math.floor((i-1)/8);
+                $("#" + lettre + chiffre).css("height", height+"px");
+                $("#" + lettre + chiffre).css("width", height+"px");
+                $("#" + lettre + chiffre).css("margin-left", marginleft+"px");
+                $("#" + lettre + chiffre).css("margin-top", margintop+"px");
             }
             else
             {
-                $('<div id="'+ lettre + chiffre +'" style="font-size: 75%; background-color: white; position: absolute; height: 70%; width: 6%; margin-left:'+ (6*((i-1)%8)) +'%;margin-top:'+ (6 * Math.floor( (i-1)/8) ) +'%;">' + lettre + chiffre + '</div>').appendTo( '#chessboard' ).droppable( {
+                $('<div id="'+ lettre + chiffre +'" class=\'whiteCase\' ">' + lettre + chiffre + '</div>').appendTo( '#chessboard' ).droppable( {
                     hoverClass: 'hovered',
                     drop: pieceDrop
                 } );
+                var height = widthChessboard / 8;
+                var marginleft = height * ((i-1)%8);
+                var margintop = height * Math.floor( (i-1)/8);
+                $("#" + lettre + chiffre).css("height", height+"px");
+                $("#" + lettre + chiffre).css("width", height+"px");
+                $("#" + lettre + chiffre).css("margin-left", marginleft+"px");
+                $("#" + lettre + chiffre).css("margin-top", margintop+"px");
             }
         }
         else
         {
             if(i%2 == 0)
             {
-                $('<div id="'+ lettre + chiffre +'" style="font-size: 75%; background-color: white; position: absolute; height: 70%; width: 6%; margin-left:'+ (6*((i-1)%8)) +'%;margin-top:'+ (6 * Math.floor( (i-1)/8) ) +'%;">' + lettre + chiffre + '</div>').appendTo( '#chessboard' ).droppable( {
+                $('<div id="'+ lettre + chiffre +'" class=\'whiteCase\' ">' + lettre + chiffre + '</div>').appendTo( '#chessboard' ).droppable( {
                     hoverClass: 'hovered',
                     drop: pieceDrop
                 } );
+                var height = widthChessboard / 8;
+                var marginleft = height * ((i-1)%8);
+                var margintop = height * Math.floor( (i-1)/8);
+                $("#" + lettre + chiffre).css("height", height+"px");
+                $("#" + lettre + chiffre).css("width", height+"px");
+                $("#" + lettre + chiffre).css("margin-left", marginleft+"px");
+                $("#" + lettre + chiffre).css("margin-top", margintop+"px");
             }
             else
             {
-                $('<div id="'+ lettre + chiffre +'" style="font-size: 75%; color: white; background-color: black; position: absolute; height: 70%; width: 6%; margin-left:'+ (6*((i-1)%8)) +'%;margin-top:'+ (6 * Math.floor( (i-1)/8) ) +'%;">' + lettre + chiffre + '</div>').appendTo( '#chessboard' ).droppable( {
+                $('<div id="'+ lettre + chiffre +'" class=\'blackCase\' ">' + lettre + chiffre + '</div>').appendTo( '#chessboard' ).droppable( {
                     hoverClass: 'hovered',
                     drop: pieceDrop
                 } );
+                var height = widthChessboard / 8;
+                var marginleft = height * ((i-1)%8);
+                var margintop = height * Math.floor( (i-1)/8);
+                $("#" + lettre + chiffre).css("height", height+"px");
+                $("#" + lettre + chiffre).css("width", height+"px");
+                $("#" + lettre + chiffre).css("margin-left", marginleft+"px");
+                $("#" + lettre + chiffre).css("margin-top", margintop+"px");
             }
         }
     }

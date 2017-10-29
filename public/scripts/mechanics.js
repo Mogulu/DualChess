@@ -33,7 +33,7 @@ ChessGame.prototype.loadChessboard = function () {
             // if piece have a case
             if (listPieces[piece] != "") {
                 // add image of the piece
-                $('<img src="../img/pieces/' + piece + '.png" id="' + piece + '" style="z-index: 1; margin-top:-29%; height: 100%; width: 100%; ">').appendTo('#' + listPieces[piece]).draggable({
+                $('<img src="../img/pieces/' + piece + '.png" id="' + piece + '" class=\'piece\'>').appendTo('#' + listPieces[piece]).draggable({
                     containment: '#content',
                     revert: true
                 });

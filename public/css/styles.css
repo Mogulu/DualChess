@@ -20,7 +20,7 @@
 body{
     margin: 0;
     padding: 0;
-    min-width: 600px;
+    min-width: 800px;
 }
 
 
@@ -130,3 +130,23 @@ body{
     font-size: 40px;
 }
 
+.blackCase{
+    font-size: 75%; 
+    color: white; 
+    background-color: black; 
+    position: absolute; 
+}
+
+.whiteCase{
+    font-size: 75%; 
+    color: black; 
+    background-color: white; 
+    position: absolute; 
+}
+
+.piece{
+    z-index: 1; 
+    margin-top:-20%; 
+    height: 100%; 
+    width: 100%; 
+}

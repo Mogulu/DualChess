@@ -26,6 +26,12 @@ function DualChess(){
 
 // Init Firebase
 function initFirebase() {
+
+    $(window).resize(function() {
+        $( init );
+        new ChessGame();
+      });
+
     //START authstatelistener
     firebase.auth().onAuthStateChanged(function(user){
         if(user){
