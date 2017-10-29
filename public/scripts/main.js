@@ -49,9 +49,9 @@ function initFirebase() {
             document.getElementById("profile-pic").src = user.photoURL;
             // user pic right corner
             document.getElementById("sign-in-status").src = user.photoURL;
-
+            
+            stats();
             initPlayer();
-
             connected();
         } else{
             //If not auth
@@ -69,7 +69,7 @@ function initFirebase() {
 
 
 
-    
+
 }
 
 function connected(){
@@ -122,6 +122,7 @@ function afterGame(){
     document.getElementById("loby-button").style.display = "block";
     document.getElementById("game-button").style.display = "none";
     BEFOREGAME = false;
+    stats();
 }
 
 function inLoby(){
@@ -209,6 +210,24 @@ function goToLoby(){
         }
     });
 }
+
+function stats(){
+    var ref = firebase.database().ref('/players/'+userId)
+    ref.once("value",function(snapshot){
+        var win = snapshot.child("win").val();
+        var loose = snapshot.child("loose").val();
+        if(loose != 0){
+            var ratio = win/loose;
+            document.getElementById("stats_ratio").textContent = "Ratio WL : "+ratio.toFixed(2);
+            document.getElementById("stats_elo").textContent = snapshot.child("elo").val();;
+
+        }else{
+
+        }
+
+    });
+}
+
 
 function searchPlayer(){
     var ref = firebase.database().ref('/loby/'+userId);
@@ -311,7 +330,7 @@ function Loose(){
         firebase.database().ref('/players/'+userId).update(data);  
 
     });
-    
+
     var refOp = firebase.database().ref('/players/'+userId);
 
     refOp.once("value",function(snapshot) {
@@ -332,7 +351,7 @@ function listenerWin(){
 
 
     var ref = firebase.database().ref('/players/'+userId+'/win')
-    ref.on("value",function(snapchot){
+    ref.on("value",function(snapshot){
         console.log("listener");    
 
         if(BEFOREWIN == false)

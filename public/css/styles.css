@@ -121,6 +121,33 @@ body{
     font-size: 40px;
 }
 
+#stats_ratio{
+    margin: 10px;
+    padding: 0;
+    text-align: center;
+    overflow: hidden;
+    font-family: 'london';
+    font-size: 60px;
+}
+
+.about{
+    margin: 10px;
+    padding: 0;
+    text-align: center;
+    overflow: hidden;
+    font-family: 'london';
+    font-size: 60px;
+}
+
+#stats_elo{
+    margin: 10px;
+    padding: 0;
+    text-align: center;
+    overflow: hidden;
+    font-family: 'london';
+    font-size: 60px;
+}
+
 #invite-log-history{
     margin-top: 40px;
     padding: 0;
