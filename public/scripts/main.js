@@ -1,5 +1,6 @@
 "use strict";
 var userId;
+var userName;
 // Initialize Firebase
 var config = {
     apiKey: "AIzaSyA_P-RNGkGLqqSzJvtf7mF-N3z8E4hAo8A",
@@ -28,6 +29,7 @@ function initFirebase() {
     firebase.auth().onAuthStateChanged(function(user){
         if(user){
             userId = user.uid;
+            userName = user.displayName;
 
             //USER PART show user data
             document.getElementById("user-data").style.visibility = "visible";
@@ -45,9 +47,8 @@ function initFirebase() {
             document.getElementById("history").style.visibility = "visible";
             document.getElementById("invite-log-game").style.display = "none";
             document.getElementById("invite-log-history").style.display = "none";
-            document.getElementById("chessboard").removeAttribute('hidden');
 
-//            document.getElementById("accout-details").textContent = JSON.stringify(user, null, "  ");
+            //            document.getElementById("accout-details").textContent = JSON.stringify(user, null, "  ");
 
             initPlayer();
         } else{
@@ -72,7 +73,9 @@ function initFirebase() {
     });
     // END authstatelistener
     document.getElementById("login-button").addEventListener("click", signInOut, false);
-    
+    document.getElementById("loby-button").addEventListener("click", goToLoby, false);
+
+
     new ChessGame();
 }
 
@@ -87,6 +90,59 @@ function signInOut() {
         firebase.auth().signInWithPopup(provider);
     }
 }
+
+function initPlayer(){
+
+    //check if player already exists
+    var ref = firebase.database().ref('/players');
+    ref.once("value",function(snapshot) {
+        if (snapshot.hasChild(userId)) {
+            console.log("alreadycreated");
+        }
+        else{
+            // create database
+            var data = {};
+            data["elo"] = 1400;
+            data["nickname"] = userName;
+            data["status"] = "menu";
+            data["win"] = 0;
+            data["loose"] = 0;       
+            firebase.database().ref('/players/'+userId).update(data);
+            console.log("user created");
+        }
+    });
+}
+
+
+function goToLoby(){
+
+    document.getElementById("chessboard").removeAttribute('hidden');
+    //check if already in loby
+    var ref = firebase.database().ref('/loby');
+    ref.once("value",function(snapshot) {
+        if (snapshot.hasChild(userId)) {
+            console.log("already In Loby");
+        }
+        else{
+            // update database
+            var elo = {};    
+            firebase.database().ref('/players/'+userId+'/elo/').once("value", function(snapshot) {
+                elo = snapshot.val();
+                console.log(elo);
+            });
+
+            var data = {};
+            data["elo"] = elo;
+            data["status"] = "waiting";   
+            firebase.database().ref('/loby/'+userId).update(data);
+            console.log("in loby");
+        }
+    });
+
+
+
+}
+
 
 // Launch function DualChess when the window is loaded
 window.onload = function() {
