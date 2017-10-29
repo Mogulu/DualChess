@@ -1253,7 +1253,6 @@ function checkStalemate(kingCase, colorPiece){
     if (pieceCheck)
         return false;
 
-    console.log("test");
     // if the king can move, it's not stalemate
     for (var i = -1; i <= 1; i++) {
         if (kingPos[0] + i > 0 && kingPos[0] + i < 9) {
