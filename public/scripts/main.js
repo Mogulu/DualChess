@@ -68,8 +68,11 @@ function initFirebase() {
     document.getElementById("game-button").addEventListener("click", Loose, false);
 
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 6d1903108f5f9c7ed2c4377fad5a29dc9d1bf853
 }
 
 function connected(){
