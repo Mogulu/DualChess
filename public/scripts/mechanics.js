@@ -126,7 +126,8 @@ function pieceDrop(event, ui) {
 
         var data = {};
         if (flagMoveOK == "promot") {
-            data[pieceId.charAt(0) + "_Q1"] = newCase;
+            data[pieceId.charAt(0) + "_Q" + nbQueen] = newCase;
+            nbQueen++;
             data[pieceId] = "";
         }
         else
@@ -184,6 +185,7 @@ function checkDeplacement(pieceId, lastCase, newCase) {
                         return false;
                     }
                 }
+                
                 var data = {};
                 data[pieceId] = true;
                 firebase.database().ref('/games/' + idGame + '/piecesMove').update(data);
@@ -624,7 +626,6 @@ function checkCheckMat(kingCase, colorPiece) {
     var kingPos = nameCaseToPosition(kingCase);
     var pieceCheck = pieceWhichAttackTheCase(kingPos, colorPiece);
 
-    console.log(pieceCheck);
     if (!pieceCheck)
         return false;
 
@@ -751,12 +752,10 @@ function checkCheckMat(kingCase, colorPiece) {
             var pieceCanGo = pieceWhichAttackTheCase(casePos, colorOpponent);
             if (pieceCanGo != false) {
                 var flag = checkDeplacement(pieceCanGo, listPieces[pieceCanGo], namePositionToCase(casePos));
-                console.log(pieceCanGo);
                 if (flag != false)
                     return false;
                 else if (flag == false && pieceCanGo == colorPiece + "_K") {
                     pieceCanGo = pieceWhichAttackTheCase(casePos, colorOpponent, "", "", colorPiece + "_K");
-                    console.log(pieceCanGo);
                     if (pieceCanGo != false) {
                         flag = checkDeplacement(pieceCanGo, listPieces[pieceCanGo], namePositionToCase(casePos));
                         if (flag != false)

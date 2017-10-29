@@ -1,5 +1,6 @@
 "use strict";
 var userId;
+var nbQueen = 1;
 // Initialize Firebase
 var config = {
     apiKey: "AIzaSyA_P-RNGkGLqqSzJvtf7mF-N3z8E4hAo8A",
