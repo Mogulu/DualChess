@@ -45,7 +45,9 @@
             <div class="view hide" id="game">
                 <p id="invite-log-game">Please, go to User tab to login.</p>
 
-                <button class="btn" id="loby-button">Search Game</button>
+                <button class="btn" style="disply:block" id="loby-button">Search Game</button>
+                <button class="btn" style="display:none" id="game-button">Cancel and loose</button>
+
 
                 <div style="display:none" class="spinner" id="spinner_loby">
                     <div class="bounce1"></div>
@@ -53,7 +55,7 @@
                     <div class="bounce3"></div>
                 </div>
 
-                <div id="chessboard" style="visibility:visible; position: absolute; padding: 50px; width: 66%;"> </div>
+                <div id="chessboard" style="visibility:hidden; position: absolute; padding: 50px; width: 66%;"> </div>
 
             </div>
 
