@@ -17,7 +17,9 @@ ChessGame.prototype.loadChessboard = function () {
 
     // get datas back
     ref.on("value", function (snapshot) {
-        // idGame = Object.keys(snapshot.val())[0];
+        if(!idGame)
+            return;
+
         colorPlayer = snapshot.val()[idGame]['colorPlayer'];
 
         // Find all pieces
@@ -37,7 +39,6 @@ ChessGame.prototype.loadChessboard = function () {
                     containment: '#content',
                     revert: true
                 });
-
                 // if we have black
                 if (userId == snapshot.val()[idGame]['id_black']) {
                     // if white to move

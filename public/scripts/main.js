@@ -68,7 +68,7 @@ function initFirebase() {
     document.getElementById("game-button").addEventListener("click", Loose, false);
 
 
-
+    new ChessGame();
     
 }
 
@@ -253,8 +253,8 @@ function searchPlayer(){
                         // create database
                         var data = {}; 
                         data[idGame] = initDatabase;
-                        data[idGame]["idBlack"] = playerSnapshot.key;
-                        data[idGame]["idWhite"] = userId;
+                        data[idGame]["id_black"] = playerSnapshot.key;
+                        data[idGame]["id_white"] = userId;
 
                         firebase.database().ref('/games').update(data);
                         console.log("user created");
