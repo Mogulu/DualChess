@@ -69,7 +69,7 @@ function initFirebase() {
 
 
 
-    new ChessGame();
+    
 }
 
 function connected(){
@@ -240,6 +240,28 @@ function searchPlayer(){
                 Game();
                 inGame();
 
+                idGame = hashFnv32a(userId + playerListSnapchot.key, true);
+                var ref2 = firebase.database().ref('/games');
+                var key2 = null;
+                ref2.once('value',function(snapshot){
+                    if (snapshot.hasChild(idGame)) {
+                        new ChessGame();
+                        console.log("Game already created");
+                    }
+                    else{
+                        new ChessGame();
+                        // create database
+                        var data = {}; 
+                        data[idGame] = initDatabase;
+                        data[idGame]["idBlack"] = playerSnapshot.key;
+                        data[idGame]["idWhite"] = userId;
+
+                        firebase.database().ref('/games').update(data);
+                        console.log("user created");
+                    }
+                }); 
+
+
             }
             else{
                 var ref = firebase.database().ref('/players/'+userId)
@@ -330,7 +352,21 @@ function listenerWin(){
     afterGame();
 }
 
+function hashFnv32a(str, asString, seed) {
+    /*jshint bitwise:false */
+    var i, l,
+        hval = (seed === undefined) ? 0x811c9dc5 : seed;
 
+    for (i = 0, l = str.length; i < l; i++) {
+        hval ^= str.charCodeAt(i);
+        hval += (hval << 1) + (hval << 4) + (hval << 7) + (hval << 8) + (hval << 24);
+    }
+    if( asString ){
+        // Convert to 8 digit hex string
+        return ("0000000" + (hval >>> 0).toString(16)).substr(-8);
+    }
+    return hval >>> 0;
+}
 
 
 // Launch function DualChess when the window is loaded

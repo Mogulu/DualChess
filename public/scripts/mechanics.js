@@ -17,7 +17,7 @@ ChessGame.prototype.loadChessboard = function () {
 
     // get datas back
     ref.on("value", function (snapshot) {
-        idGame = Object.keys(snapshot.val())[0];
+        // idGame = Object.keys(snapshot.val())[0];
         colorPlayer = snapshot.val()[idGame]['colorPlayer'];
 
         // Find all pieces
