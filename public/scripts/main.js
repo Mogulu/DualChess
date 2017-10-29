@@ -1,8 +1,11 @@
 "use strict";
 var userId;
+var opID;
 var userName;
 var nbQueen = 1;
 var BEFOREGAME = false;
+var BEFOREWIN = false;
+
 // Initialize Firebase
 var config = {
     apiKey: "AIzaSyA_P-RNGkGLqqSzJvtf7mF-N3z8E4hAo8A",
@@ -32,7 +35,7 @@ function initFirebase() {
     $(window).resize(function() {
         $( init );
         new ChessGame();
-      });
+    });
 
     //START authstatelistener
     firebase.auth().onAuthStateChanged(function(user){
@@ -44,6 +47,8 @@ function initFirebase() {
             document.getElementById("user-data").style.visibility = "visible";
             document.getElementById("username").textContent = user.displayName;
             document.getElementById("profile-pic").src = user.photoURL;
+            // user pic right corner
+            document.getElementById("sign-in-status").src = user.photoURL;
 
             initPlayer();
 
@@ -60,7 +65,7 @@ function initFirebase() {
     // END authstatelistener
     document.getElementById("login-button").addEventListener("click", signInOut, false);
     document.getElementById("loby-button").addEventListener("click", goToLoby, false);
-    document.getElementById("game-button").addEventListener("click", Cancel, false);
+    document.getElementById("game-button").addEventListener("click", Loose, false);
 
 
 
@@ -73,8 +78,7 @@ function connected(){
     // LOGOUT BUTTON
     document.getElementById("login-button").style.backgroundColor = "#d25b46";
     document.getElementById("span-login-button").textContent = "Log out";
-    // user pic right corner
-    document.getElementById("sign-in-status").src = user.photoURL;
+
 
     //mechanics
     document.getElementById("user-data").style.visibility = "visible";
@@ -107,9 +111,17 @@ function inMenu(){
     document.getElementById("loby-button").textContent = "Cancel Search";
     document.getElementById("spinner_loby").style.display = "block";
     document.getElementById("chessboard").style.visibility = "hidden"
-        document.getElementById("loby-button").style.display = "block";
-    document.getElementById("game-button").style.display = "none";
+    BEFOREGAME = false;
+}
 
+function afterGame(){
+    //cancel button
+    document.getElementById("loby-button").textContent = "Search Game";
+    document.getElementById("spinner_loby").style.display = "none";
+    document.getElementById("chessboard").style.visibility = "hidden"
+    document.getElementById("loby-button").style.display = "block";
+    document.getElementById("game-button").style.display = "none";
+    BEFOREGAME = false;
 }
 
 function inLoby(){
@@ -221,6 +233,7 @@ function searchPlayer(){
                 var data_players = {};
                 data_players["status"] = "inGame";
 
+                opID = playerSnapshot.key;
                 firebase.database().ref('/players/'+playerSnapshot.key).update(data_players);
                 firebase.database().ref('/players/'+userId).update(data_players);
 
@@ -239,6 +252,7 @@ function searchPlayer(){
                         BEFOREGAME = true;
                     }else{
                         Game();
+                        BEFOREGAME = false;
                         console.log("someone found me");
                     }
                     console.log(BEFOREGAME+" ref");
@@ -255,16 +269,16 @@ function searchPlayer(){
 function Game(){
 
     inGame();
+    listenerWin();
     document.getElementById("loby-button").style.display = "none";
     document.getElementById("game-button").style.display = "block";
 
 
 }
 
-function Cancel(){
+function Loose(){
 
-    
-    inMenu();
+
     var ref = firebase.database().ref('/players/'+userId);
     ref.once("value",function(snapshot) {
         var loose = snapshot.child("loose").val() ;
@@ -272,8 +286,48 @@ function Cancel(){
         data["status"] = "menu"; 
         data["loose"] = loose + 1;       
 
-        firebase.database().ref('/players/'+userId).update(data);   
+        firebase.database().ref('/players/'+userId).update(data);  
+
     });
+    
+    var refOp = firebase.database().ref('/players/'+userId);
+
+    refOp.once("value",function(snapshot) {
+        var win = snapshot.child("win").val() ;
+        var data = {};
+        data["status"] = "menu"; 
+        data["win"] = win + 1;       
+
+        firebase.database().ref('/players/'+opID).update(data);  
+
+    });
+
+    BEFOREGAME = false;
+    afterGame();
+}
+
+function listenerWin(){
+
+
+    var ref = firebase.database().ref('/players/'+userId+'/win')
+    ref.on("value",function(snapchot){
+        console.log("listener");    
+
+        if(BEFOREWIN == false)
+        {
+            console.log(BEFOREWIN+" init");
+            BEFOREWIN = true;
+        }else{
+            BEFOREWIN = false;
+            console.log("someone found me");
+        }
+        console.log(BEFOREWIN+" ref");
+
+
+    });
+
+
+    afterGame();
 }
 
 
@@ -283,4 +337,4 @@ function Cancel(){
 window.onload = function() {
     window.dualChess = new DualChess();
 
-};
+}
