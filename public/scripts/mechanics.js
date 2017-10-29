@@ -173,7 +173,10 @@ function pieceDrop(event, ui) {
         //check if is checkmate
         var flag = checkCheckMat(listPieces[ colorOponnent + "_K"], colorOponnent);
         if (flag == true)
+        {
+            Loose();
             return;
+        }
         else
             console.log("Not checkmate");
     }
