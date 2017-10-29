@@ -159,7 +159,17 @@ function pieceDrop(event, ui) {
 
         firebase.database().ref('/games/' + idGame).update(data);
 
-        //check if is checkmat (PLACE THIS IN OTHER PLACE)
+        //check if is Stalemate
+        var flag = checkStalemate(listPieces[ colorOponnent + "_K"], colorOponnent);
+        if (flag == true){
+            console.log("Slatemate !!!");
+            return;
+        }
+        else{
+            console.log("Not Slatemate");
+        }
+
+        //check if is checkmate
         var flag = checkCheckMat(listPieces[ colorOponnent + "_K"], colorOponnent);
         if (flag == true)
             return;
@@ -1161,5 +1171,119 @@ function checkCheckMat(kingCase, colorPiece) {
     }
 
     console.log("Checkmate !!!");
+    return true;
+}
+
+// Check if the king is stalemate (pat)
+function checkStalemate(kingCase, colorPiece){
+
+    var colorOpponent;
+    if (colorPiece == "B")
+        colorOpponent = "W";
+    else
+        colorOpponent = "B";
+
+    var newKingPos = {};
+    var newPos = {};
+
+    var flagBlackKnight = false;
+    var flagBlackBishop = false;
+    var flagWhiteKnight = false;
+    var flagWhiteBishop = false;
+    var nbPieceOut = 0;
+
+    var listPieces = findPieces();
+
+    // check if there is sufisally piece to checkmate
+    for (var key in listPieces) {
+        if(key.charAt(0) == "B" && listPieces[key] != ""){
+            switch (key.charAt(2)) {
+                case "Q":
+                case "R":
+                case "P":
+                    return false;
+                    break;
+                case "B":
+                    if(flagBlackBishop == true || flagBlackKnight == true)
+                        return false;
+                    else
+                        flagBlackBishop == true;
+                    break;
+                case "N":
+                    if(flagBlackBishop == true || flagBlackKnight == true)
+                        return false;
+                    else
+                        flagBlackKnight == true;
+                    break;
+            }
+        }
+        else if(key.charAt(0) == "W" && listPieces[key] != ""){
+            switch (key.charAt(2)) {
+                case "Q":
+                case "R":
+                case "P":
+                    return false;
+                    break;
+                case "B":
+                    if(flagWhiteBishop == true || flagWhiteKnight == true)
+                        return false;
+                    else
+                        flagWhiteBishop == true;
+                    break;
+                case "N":
+                    if(flagWhiteBishop == true || flagWhiteKnight == true)
+                        return false;
+                    else
+                        flagWhiteKnight == true;
+                    break;
+            }
+        }
+        else{
+            nbPieceOut++;
+        }
+    }
+
+    if(nbPieceOut >= 28)
+        return true;
+
+    // check if the king is check, if is it's not a stalemate
+    var kingPos = nameCaseToPosition(kingCase);
+    var pieceCheck = pieceWhichAttackTheCase(kingPos, colorPiece);
+    if (pieceCheck)
+        return false;
+
+    // if the king can move, it's not stalemate
+    for (var i = -1; i <= 1; i++) {
+        if (kingPos[0] + i > 0 && kingPos[0] + i < 9) {
+            for (var j = -1; j <= 1; j++) {
+                if (kingPos[1] + j > 0 && kingPos[1] + j < 9) {
+                    newKingPos[0] = kingPos[0] + i;
+                    newKingPos[1] = kingPos[1] + j;
+                    if (checkDeplacement(colorPiece + "_K", kingCase, namePositionToCase(newKingPos)) != false) {
+                        return false;
+                    }
+                }
+            }
+        }
+    }
+
+    // check for each case
+    for (var i = 1; i<= 8; i++){
+        for (var j = 1; j<=8; j++){
+            // check if each piece can move
+            for (var key in listPieces) {
+                // if piece is the same color as the king, we check if it can move
+                if (key.charAt(0) == colorPiece){
+                    newPos[0] = i;
+                    newPos[1] = j;
+                    // if it can move it's not a stalemate
+                    if (checkDeplacement(key, listPieces[key], namePositionToCase(newPos)) != false) {
+                        return false;
+                    }
+                }
+            }
+        }
+    }
+
     return true;
 }
