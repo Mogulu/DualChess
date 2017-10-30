@@ -1,36 +1,36 @@
-[debug] [2017-10-29T19:38:28.000Z] ----------------------------------------------------------------------
-[debug] [2017-10-29T19:38:28.002Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Asus-Pc\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
-[debug] [2017-10-29T19:38:28.003Z] CLI Version:   3.10.0
-[debug] [2017-10-29T19:38:28.003Z] Platform:      win32
-[debug] [2017-10-29T19:38:28.003Z] Node Version:  v6.11.2
-[debug] [2017-10-29T19:38:28.004Z] Time:          Sun Oct 29 2017 20:38:28 GMT+0100 (Paris, Madrid)
-[debug] [2017-10-29T19:38:28.004Z] ----------------------------------------------------------------------
+[debug] [2017-10-29T23:20:12.519Z] ----------------------------------------------------------------------
+[debug] [2017-10-29T23:20:12.522Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\rob\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
+[debug] [2017-10-29T23:20:12.522Z] CLI Version:   3.10.1
+[debug] [2017-10-29T23:20:12.522Z] Platform:      win32
+[debug] [2017-10-29T23:20:12.522Z] Node Version:  v6.11.2
+[debug] [2017-10-29T23:20:12.523Z] Time:          Mon Oct 30 2017 00:20:12 GMT+0100 (W. Europe Standard Time)
+[debug] [2017-10-29T23:20:12.523Z] ----------------------------------------------------------------------
 [debug] 
-[debug] [2017-10-29T19:38:28.018Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2017-10-29T19:38:28.019Z] > authorizing via signed-in user
-[debug] [2017-10-29T19:38:28.022Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
-[debug] [2017-10-29T19:38:28.023Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token { refresh_token: '1/CZPFmKdScAcNZVfQ6jE0zukgdbrILZXqAA6cuyPXrnw',
+[debug] [2017-10-29T23:20:12.533Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2017-10-29T23:20:12.534Z] > authorizing via signed-in user
+[debug] [2017-10-29T23:20:12.536Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2017-10-29T23:20:12.536Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token { refresh_token: '1/oFB99fzBqetsArGSvUkwF1yXJ0fHBUbUsz53YCu_u9g',
   client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
   client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
   grant_type: 'refresh_token',
   scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
- Sun Oct 29 2017 20:38:28 GMT+0100 (Paris, Madrid)
-[debug] [2017-10-29T19:38:28.710Z] <<< HTTP RESPONSE 200
-[debug] [2017-10-29T19:38:29.171Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/dualchess  
- Sun Oct 29 2017 20:38:29 GMT+0100 (Paris, Madrid)
-[debug] [2017-10-29T19:38:30.170Z] <<< HTTP RESPONSE 200
-[debug] [2017-10-29T19:38:30.171Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/dualchess/tokens  
- Sun Oct 29 2017 20:38:30 GMT+0100 (Paris, Madrid)
-[debug] [2017-10-29T19:38:31.000Z] <<< HTTP RESPONSE 200
+ Mon Oct 30 2017 00:20:12 GMT+0100 (W. Europe Standard Time)
+[debug] [2017-10-29T23:20:12.676Z] <<< HTTP RESPONSE 200
+[debug] [2017-10-29T23:20:12.687Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/dualchess  
+ Mon Oct 30 2017 00:20:12 GMT+0100 (W. Europe Standard Time)
+[debug] [2017-10-29T23:20:13.361Z] <<< HTTP RESPONSE 200
+[debug] [2017-10-29T23:20:13.362Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/dualchess/tokens  
+ Mon Oct 30 2017 00:20:13 GMT+0100 (W. Europe Standard Time)
+[debug] [2017-10-29T23:20:14.026Z] <<< HTTP RESPONSE 200
 [info] 
-[info] === Serving from 'C:\Users\Asus-Pc\Dropbox\transfert\ESIEA\5A\WEB\DualChess'...
+[info] === Serving from 'D:\Documents\GitHub\DualChess'...
 [info] 
-[debug] [2017-10-29T19:38:31.004Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/dualchess  
- Sun Oct 29 2017 20:38:31 GMT+0100 (Paris, Madrid)
-[debug] [2017-10-29T19:38:32.264Z] <<< HTTP RESPONSE 200
-[debug] [2017-10-29T19:38:32.265Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/155258817437/clients/_:getWebAppConfig  
- Sun Oct 29 2017 20:38:32 GMT+0100 (Paris, Madrid)
-[debug] [2017-10-29T19:38:33.111Z] <<< HTTP RESPONSE 200
+[debug] [2017-10-29T23:20:14.029Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/dualchess  
+ Mon Oct 30 2017 00:20:14 GMT+0100 (W. Europe Standard Time)
+[debug] [2017-10-29T23:20:14.734Z] <<< HTTP RESPONSE 200
+[debug] [2017-10-29T23:20:14.734Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/155258817437/clients/_:getWebAppConfig  
+ Mon Oct 30 2017 00:20:14 GMT+0100 (W. Europe Standard Time)
+[debug] [2017-10-29T23:20:15.178Z] <<< HTTP RESPONSE 200
 [info] i  hosting: Serving hosting files from: public
 [info] +  hosting: Local server: http://localhost:5000
 
