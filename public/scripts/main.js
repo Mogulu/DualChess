@@ -118,6 +118,7 @@ function afterGame(){
     document.getElementById("loby-button").style.display = "block";
     document.getElementById("game-button").style.display = "none";
     BEFOREGAME = false;
+
     stats();
 }
 
@@ -245,8 +246,11 @@ function searchPlayer(){
                 playerListSnapchot.child(userId).ref.remove();
                 findPlayer = true;
 
+                idGame = hashFnv32a(userId + playerListSnapchot.key, true);
+
                 var data_players = {};
                 data_players["status"] = "inGame";
+                data_players["idGame"] = idGame;
 
                 opID = playerSnapshot.key;
                 firebase.database().ref('/players/'+playerSnapshot.key).update(data_players);
@@ -255,7 +259,6 @@ function searchPlayer(){
                 Game();
                 inGame();
 
-                idGame = hashFnv32a(userId + playerListSnapchot.key, true);
                 var ref2 = firebase.database().ref('/games');
                 var key2 = null;
                 ref2.once('value',function(snapshot){
@@ -279,7 +282,7 @@ function searchPlayer(){
 
             }
             else{
-                var ref = firebase.database().ref('/players/'+userId)
+                var ref = firebase.database().ref('/players/'+userId);
                 ref.on("value",function(snapchot){
                     console.log("listener");    
 
@@ -288,7 +291,10 @@ function searchPlayer(){
                         console.log(BEFOREGAME+" init");
                         BEFOREGAME = true;
                     }else{
+                        idGame = snapchot.child("idGame").val();
                         Game();
+                        inGame();
+                        new ChessGame();
                         BEFOREGAME = false;
                         console.log("someone found me");
                     }
@@ -307,6 +313,7 @@ function Game(){
 
     inGame();
     listenerWin();
+
     document.getElementById("loby-button").style.display = "none";
     document.getElementById("game-button").style.display = "block";
 
@@ -315,13 +322,16 @@ function Game(){
 
 function Loose(){
 
-
     var ref = firebase.database().ref('/players/'+userId);
     ref.once("value",function(snapshot) {
         var loose = snapshot.child("loose").val() ;
         var data = {};
         data["status"] = "menu"; 
-        data["loose"] = loose + 1;       
+        data["loose"] = loose + 1;
+
+        firebase.database().ref('/games/'+idGame).remove();
+        firebase.database().ref('/players/'+userId+'/idGame').remove();
+        firebase.database().ref('/players/'+opID+'/idGame').remove();
 
         firebase.database().ref('/players/'+userId).update(data);  
 
@@ -349,7 +359,7 @@ function listenerWin(){
     var ref = firebase.database().ref('/players/'+userId+'/win')
     ref.on("value",function(snapshot){
         console.log("listener");    
-
+        
         if(BEFOREWIN == false)
         {
             console.log(BEFOREWIN+" init");

@@ -40,7 +40,7 @@ ChessGame.prototype.loadChessboard = function () {
                     revert: true
                 });
                 // if we have black
-                if (userId == snapshot.val()[idGame]['id_black']) {
+                if (userId == snapshot.val()[idGame]['idBlack']) {
                     // if white to move
                     if (colorPlayer == 'white') {
                         // make all pieces not draggable
@@ -56,7 +56,7 @@ ChessGame.prototype.loadChessboard = function () {
                     }
                 }
                 // else if we have white make the same thing
-                else if (userId == snapshot.val()[idGame]['id_white']) {
+                else if (userId == snapshot.val()[idGame]['idWhite']) {
                     if (colorPlayer == 'black') {
                         $("#" + piece).draggable('disable');
                     }

@@ -2,8 +2,8 @@
   "games" : {
     "shW8RTDF7SxCYkLqmnWUYwL34XyG" : {
       "colorPlayer" : "black",
-      "id_black" : "yfWWEGLPreacTBOVOogRa3SgV7P2",
-      "id_white" : "WG1Hev2hjyfKDDxmvIdT3Ksujza2",
+      "idBlack" : "yfWWEGLPreacTBOVOogRa3SgV7P2",
+      "idWhite" : "WG1Hev2hjyfKDDxmvIdT3Ksujza2",
       "messages" : {
         "BA5y0ebaJtD7yGFy26keieXsJHEr" : {
           "expeditor" : "WG1Hev2hjyfKDDxmvIdT3Ksujza2",
